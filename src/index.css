@@ -1,0 +1,18 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: "Montserrat", sans-serif;
+}
+
+.bg-gradient-header {
+  background: linear-gradient(to right, #0f172a 50%, #ee3131 50%);
+}
+.header-shape {
+  transform: rotate(20deg);
+
+  right: 0;
+}
