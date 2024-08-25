@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import BtnAccount from "../../ui/buttons/BtnAccount";
 
 const navItems = [
   {
@@ -36,7 +37,7 @@ const navItems = [
 const Nav = () => {
   return (
     <nav className="bg-slate-900 w-full">
-      <div className="container mx-auto px-1 text-white font-semibold">
+      <div className="container mx-auto px-1 text-white font-semibold flex justify-between items-center">
         <div>
           {navItems.map((item, index) => (
             <Link
@@ -56,6 +57,7 @@ const Nav = () => {
             </Link>
           ))}
         </div>
+        <BtnAccount />
       </div>
     </nav>
   );
