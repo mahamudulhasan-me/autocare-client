@@ -85,7 +85,7 @@ function CarouselNavigation({
       <button
         type="button"
         className={cn(
-          "pointer-events-auto h-fit w-fit rounded-full bg-zinc-50 p-2 transition-opacity duration-300 dark:bg-slate-900",
+          "pointer-events-auto h-fit w-fit rounded-md bg-zinc-50 p-2 transition-opacity duration-300 dark:bg-slate-900",
           alwaysShow
             ? "opacity-100"
             : "opacity-0 group-hover/hover:opacity-100",
@@ -109,7 +109,7 @@ function CarouselNavigation({
       <button
         type="button"
         className={cn(
-          "pointer-events-auto h-fit w-fit rounded-full bg-zinc-50 p-2 transition-opacity duration-300 dark:bg-zinc-950",
+          "pointer-events-auto h-fit w-fit rounded-md bg-zinc-50 p-2 transition-opacity duration-300 dark:bg-zinc-950",
           alwaysShow
             ? "opacity-100"
             : "opacity-0 group-hover/hover:opacity-100",

@@ -3,6 +3,7 @@ import CarPolish from "./carPolish/CarPolish";
 import KeyFeatures from "./keyFeatures/KeyFeatures";
 
 import Services from "./services/Services";
+import Testimonials from "./testimonials/Testimonials";
 
 const HomePage = () => {
   return (
@@ -11,6 +12,7 @@ const HomePage = () => {
       <KeyFeatures />
       <CarPolish />
       <Services />
+      <Testimonials />
     </div>
   );
 };

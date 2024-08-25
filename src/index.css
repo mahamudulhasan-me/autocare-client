@@ -11,6 +11,9 @@ body {
 .bg-gradient-header {
   background: linear-gradient(to right, #0f172a 50%, #ee3131 50%);
 }
+.bg-gradient-testimonial {
+  background: linear-gradient(to right, #0f172a 50%, #f1f5f9 50%);
+}
 .header-shape {
   transform: rotate(20deg);
 
