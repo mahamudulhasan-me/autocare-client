@@ -8,7 +8,7 @@ import PolishCard from "./PolishCard";
 const CarPolish = () => {
   return (
     <div className="mt-20">
-      <div className="container mx-auto px-1 grid grid-cols-12 gap-x-10">
+      <div className="container mx-auto px-[4%] grid grid-cols-12 gap-x-5">
         <div className="col-span-7">
           <h1 className="uppercase text-slate-900 text-2xl font-semibold">
             Car <span className="text-primary">polish</span>
@@ -54,7 +54,7 @@ const CarPolish = () => {
               industry. Lorem Ipsum has been the industry's standard dummy text
               ever since the.
             </p>
-            <BtnPrimary title="Read More" />
+            <BtnPrimary title="Book Service" />
           </div>
         </div>
         <div className="col-span-5 mt-10">

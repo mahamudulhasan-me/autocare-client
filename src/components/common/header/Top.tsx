@@ -7,7 +7,7 @@ import logo from "../../../assets/images/logo-black.png";
 const Top = () => {
   return (
     <div className="bg-slate-50">
-      <div className="container mx-auto px-1 py-1 grid grid-cols-12">
+      <div className="container mx-auto px-[4%] py-1 grid grid-cols-12">
         <div className="col-span-5">
           <Link to={"/"}>
             <img src={logo} alt="logo" className="w-52" />

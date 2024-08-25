@@ -22,7 +22,7 @@ export default function Banner() {
               style={{ backgroundImage: `url(${banner4})` }}
               className="h-[calc(100vh-50px)] w-full bg-cover bg-center bg-no-repeat bg-slate-900/60 bg-blend-overlay flex items-center justify-center"
             >
-              <div className="container mx-auto px-1">
+              <div className="container mx-auto px-[4%]">
                 <TextEffect
                   per="char"
                   preset="fade"
@@ -58,7 +58,7 @@ export default function Banner() {
               style={{ backgroundImage: `url(${banner5})` }}
               className="h-[calc(100vh-50px)] w-full bg-cover bg-center bg-no-repeat bg-slate-900/60 bg-blend-overlay flex items-center justify-center"
             >
-              <div className="container mx-auto px-1 flex flex-col justify-end items-center mt-36">
+              <div className="container mx-auto px-[4%] flex flex-col justify-end items-center mt-36">
                 <TextEffect
                   per="char"
                   preset="slide"
@@ -93,7 +93,7 @@ export default function Banner() {
               style={{ backgroundImage: `url(${banner6})` }}
               className="h-[calc(100vh-50px)] w-full bg-cover bg-center bg-no-repeat bg-slate-900/60 bg-blend-overlay flex items-center justify-center"
             >
-              <div className="container mx-auto px-1 ">
+              <div className="container mx-auto px-[4%] ">
                 <TextEffect
                   per="char"
                   preset="fade"
