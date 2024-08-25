@@ -43,7 +43,7 @@ const Nav = () => {
             <Link
               to={item.path}
               key={item.id}
-              className="h-full border-b-2 border-slate-900 hover:border-primary text-center hover:text-primary inline-block transition-colors py-4"
+              className="h-full border-b-2 border-slate-900 hover:border-primary text-center hover:text-primary inline-block transition-colors py-5"
             >
               <span
                 className={`px-5 ${
