@@ -1,14 +1,61 @@
-import headerCurve from "../../../assets/images/shape/header-curv.png";
+import { Link } from "react-router-dom";
+
+const navItems = [
+  {
+    id: 1,
+    title: "Home",
+    path: "/",
+  },
+  {
+    id: 2,
+    title: "About Us",
+    path: "/about",
+  },
+  {
+    id: 3,
+    title: "Services",
+    path: "/services",
+  },
+  {
+    id: 4,
+    title: "Products",
+    path: "/products",
+  },
+  {
+    id: 5,
+    title: "Contact",
+    path: "/contact",
+  },
+  {
+    id: 6,
+    title: "Blog",
+    path: "/blog",
+  },
+];
+
 const Nav = () => {
   return (
-    <nav className="col-span-9 bg-primary flex h-full  relative w-full">
-      <div className="h-full">
-        <img src={headerCurve} alt="" className="h-20 ml-4" />
-      </div>
-      <div className="w-full">
-        this is nav rere Lorem ipsum dolor sit amet consectetur adipisicing
-        elit. Delectus nemo obcaecati nesciunt molestias modi voluptatibus
-        similique laborum eos dolores saepe?
+    <nav className="bg-slate-900 w-full">
+      <div className="container mx-auto px-1 text-white font-semibold">
+        <div>
+          {navItems.map((item, index) => (
+            <Link
+              to={item.path}
+              key={item.id}
+              className="h-full border-b-2 border-slate-900 hover:border-primary text-center hover:text-primary inline-block transition-colors py-4"
+            >
+              <span
+                className={`px-5 ${
+                  index !== navItems.length - 1
+                    ? "border-r border-slate-400"
+                    : ""
+                }`}
+              >
+                {item.title}
+              </span>
+            </Link>
+          ))}
+        </div>
       </div>
     </nav>
   );
