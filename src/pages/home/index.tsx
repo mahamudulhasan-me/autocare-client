@@ -1,5 +1,11 @@
+import Banner from "./banner/Banner";
+
 const HomePage = () => {
-  return <div className="bg-red">this is home page</div>;
+  return (
+    <div>
+      <Banner />
+    </div>
+  );
 };
 
 export default HomePage;
