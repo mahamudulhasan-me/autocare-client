@@ -16,3 +16,12 @@ body {
 
   right: 0;
 }
+.stoke-number {
+  margin: 0;
+  font-size: 60px;
+  font-weight: 500;
+  line-height: 22px;
+  color: #000;
+  -webkit-text-fill-color: transparent;
+  -webkit-text-stroke: 1px #cbd5e1;
+}

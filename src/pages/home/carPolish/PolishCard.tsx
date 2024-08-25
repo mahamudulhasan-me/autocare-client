@@ -16,7 +16,7 @@ const PolishCard = ({
     setValue(count);
   }, [count]);
   return (
-    <div className="shadow-[0_3px_10px_rgb(0,0,0,0.2)] rounded-sm flex flex-col justify-center items-center py-6 space-y-2">
+    <div className="w-full shadow-[0_3px_10px_rgb(0,0,0,0.2)] rounded-md flex flex-col justify-center items-center py-6 px-9 space-y-2 group">
       <div className="size-24 rounded-full bg-primary flex justify-center items-center text-white text-5xl">
         {icon}
       </div>
@@ -31,7 +31,9 @@ const PolishCard = ({
         />
         <FaPlus size={24} />
       </div>
-      <p className=" text-slate-900 font-[500] capitalize">{title}</p>
+      <p className=" text-slate-900 font-[500] capitalize group-hover:text-white">
+        {title}
+      </p>
     </div>
   );
 };

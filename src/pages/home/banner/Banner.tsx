@@ -14,7 +14,7 @@ import BtnPrimary from "../../../components/ui/buttons/BtnPrimary";
 
 export default function Banner() {
   return (
-    <div className="relative">
+    <div className="relative z-0">
       <Carousel>
         <CarouselContent>
           <CarouselItem>

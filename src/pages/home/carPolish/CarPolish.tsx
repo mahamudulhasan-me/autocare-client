@@ -2,9 +2,27 @@ import { GrUserWorker } from "react-icons/gr";
 import { RiHomeOfficeLine } from "react-icons/ri";
 import { VscWorkspaceTrusted } from "react-icons/vsc";
 import sectionDiv from "../../../assets/images/bg-img.png";
+import AnimatedBackground from "../../../components/core/animated-background";
 import BtnPrimary from "../../../components/ui/buttons/BtnPrimary";
 import CarPolishGallery from "./CarPolishGallery";
 import PolishCard from "./PolishCard";
+const ITEMS = [
+  {
+    count: 1800,
+    icon: <GrUserWorker />,
+    title: "Engineers & Workers",
+  },
+  {
+    count: 620,
+    icon: <RiHomeOfficeLine />,
+    title: "Factory In Worldwide",
+  },
+  {
+    count: 1557,
+    icon: <VscWorkspaceTrusted />,
+    title: "Projects Completed",
+  },
+];
 const CarPolish = () => {
   return (
     <div className="mt-20">
@@ -27,22 +45,30 @@ const CarPolish = () => {
               popularized in the 1960s with the release of Learjet sheets
               containing..
             </p>
-            <div className="grid grid-cols-3 items-center justify-between gap-x-8">
-              <PolishCard
-                count={1800}
-                icon={<GrUserWorker />}
-                title="Engineers & Workers"
-              />
-              <PolishCard
-                count={620}
-                icon={<RiHomeOfficeLine />}
-                title="Factory In Worldwide"
-              />{" "}
-              <PolishCard
-                count={1527}
-                icon={<VscWorkspaceTrusted />}
-                title="Projects Completed"
-              />
+            <div className="grid grid-cols-3 gap-x-8">
+              <AnimatedBackground
+                className="rounded-md bg-slate-800  w-full"
+                transition={{
+                  type: "spring",
+                  bounce: 0.2,
+                  duration: 0.6,
+                }}
+                enableHover
+              >
+                {ITEMS.map((item, index) => (
+                  <div
+                    key={index}
+                    data-id={`card-${index}`}
+                    className="w-full flex justify-center items-center"
+                  >
+                    <PolishCard
+                      count={item.count}
+                      icon={item.icon}
+                      title={item.title}
+                    />
+                  </div>
+                ))}
+              </AnimatedBackground>
             </div>
             <p>
               There are many variations of passages of Lorem Ipsum typesetting
