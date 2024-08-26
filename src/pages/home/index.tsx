@@ -3,6 +3,7 @@ import CarPolish from "./carPolish/CarPolish";
 import KeyFeatures from "./keyFeatures/KeyFeatures";
 
 import Services from "./services/Services";
+import Team from "./team/Team";
 import Testimonials from "./testimonials/Testimonials";
 
 const HomePage = () => {
@@ -13,6 +14,7 @@ const HomePage = () => {
       <CarPolish />
       <Services />
       <Testimonials />
+      <Team />
     </div>
   );
 };
