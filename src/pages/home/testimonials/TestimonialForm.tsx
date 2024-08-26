@@ -10,17 +10,20 @@ const TestimonialForm = () => {
       </div>
       <div className="w-full flex items-center justify-between gap-4">
         <input
+          required
           type="text"
           placeholder="Name"
           className="w-full p-2 rounded-sm  text-lg text-slate-900 focus:outline-none  focus:ring-1 focus:ring-primary"
         />
         <input
+          required
           type="text"
           placeholder="Email"
           className="w-full p-2 rounded-sm  text-lg text-slate-900 focus:outline-none  focus:ring-1 focus:ring-primary"
         />
       </div>
       <textarea
+        required
         name=""
         id=""
         placeholder="Your Feedback"
@@ -36,7 +39,10 @@ const TestimonialForm = () => {
             reset
           </span>
         </button> */}
-        <button className=" text-white  rounded-md flex items-stretch gap-1 group">
+        <button
+          type="submit"
+          className=" text-white  rounded-md flex items-stretch gap-1 group"
+        >
           <span className="bg-primary rounded-l-md px-8 py-2.5 font-semibold group-hover:bg-opacity-90 transition-opacity uppercase">
             Submit
           </span>
