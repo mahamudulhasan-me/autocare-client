@@ -172,7 +172,7 @@ const Register = ({ setSignInPage, signInPage }: RegisterProps) => {
             !acceptTerms || isLoading ? "bg-opacity-70" : "bg-opacity-100"
           }`}
         >
-          {isLoading ? <BtnLoader /> : " Sign up with email"}
+          {isLoading ? <BtnLoader /> : "Sign up with email"}
         </button>
         <p className="text-center text-black ">
           Have an account?{" "}

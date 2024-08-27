@@ -1,4 +1,5 @@
-import { useState } from "react";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import {
   FaEye,
@@ -8,8 +9,11 @@ import {
   FaGoogle,
 } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 import bg from "../../assets/images/banner/slide4.jpg";
 import logo from "../../assets/images/logo.png";
+import BtnLoader from "../../components/ui/loaders/BtnLoader";
+import { useLoginMutation } from "../../redux/authentication/authApiSlice";
 import Register from "./Register";
 
 interface Inputs {
@@ -23,6 +27,8 @@ const Login = () => {
   const [error, setError] = useState("");
 
   const navigate = useNavigate();
+  const [loginMutation, { isError, isSuccess, error: serverError, isLoading }] =
+    useLoginMutation();
   //   const location = useLocation();
   //   const path = location?.state?.redirectPath || "/";
 
@@ -33,9 +39,19 @@ const Login = () => {
   } = useForm<Inputs>();
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
-    console.log(data);
-    navigate("/welcome"); // Example navigation after successful login
+    loginMutation(data);
   };
+
+  useEffect(() => {
+    if (isError) {
+      setError((serverError as any)?.data?.message);
+      toast.error((serverError as any)?.data?.message);
+    }
+    if (isSuccess) {
+      toast.success("Login Successful");
+      navigate("/");
+    }
+  }, [isError, isSuccess, serverError, navigate]);
 
   return (
     <div
@@ -44,9 +60,9 @@ const Login = () => {
     >
       <div className="md:w-3/5 px-2 md:px-0 mx-auto">
         <div className="flex bg-slate-300 gap-1 px-6 py-3 rounded-t-xl">
-          <div className="w-3 h-3 bg-red-600 rounded-full"></div>
-          <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
-          <div className="w-3 h-3 bg-green-600 rounded-full"></div>
+          <div className="size-3 bg-red-600 rounded-full"></div>
+          <div className="size-3 bg-yellow-500 rounded-full"></div>
+          <div className="size-3 bg-green-600 rounded-full"></div>
         </div>
         <div className="md:grid grid-cols-12">
           <div className="col-span-5 bg-slate-950/70 px-10 py-6 text-white">
@@ -103,8 +119,8 @@ const Login = () => {
                       {...register("password", {
                         required: "Password is required",
                         minLength: {
-                          value: 6,
-                          message: "Password must be at least 6 characters",
+                          value: 8,
+                          message: "Password must be at least 8 characters",
                         },
                       })}
                       placeholder="Password"
@@ -130,13 +146,13 @@ const Login = () => {
                       Forget Password?
                     </Link>
                   </div>
-                  {error && (
-                    <p className="text-rose-500 font-semibold">
-                      {error.includes("Firebase") ? error.slice(9) : error}
-                    </p>
-                  )}
-                  <button className="bg-primary text-white font-semibold w-full rounded-md py-3">
-                    Login with email
+                  {error && <p className="text-rose-500">{error}</p>}
+                  <button
+                    type="submit"
+                    disabled={isLoading}
+                    className="bg-primary text-white font-semibold w-full rounded-md py-3"
+                  >
+                    {isLoading ? <BtnLoader /> : "Login with email"}
                   </button>
                   <p className="text-center">
                     Don&apos;t have an account?{" "}
