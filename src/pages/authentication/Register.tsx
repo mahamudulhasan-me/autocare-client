@@ -1,7 +1,11 @@
-import { ChangeEvent, useState } from "react";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { ChangeEvent, useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
+import { toast } from "sonner";
+import BtnLoader from "../../components/ui/loaders/BtnLoader";
+import { useRegisterMutation } from "../../redux/authentication/authApiSlice";
 
 interface RegisterProps {
   setSignInPage: (value: boolean) => void;
@@ -22,6 +26,9 @@ const Register = ({ setSignInPage, signInPage }: RegisterProps) => {
   const [password, setPassword] = useState("");
   const [passError, setPassError] = useState("");
   const [acceptTerms, setAcceptTerms] = useState(false);
+
+  const [registerMutation, { isError, isLoading, isSuccess, error }] =
+    useRegisterMutation();
 
   const navigate = useNavigate();
 
@@ -50,9 +57,18 @@ const Register = ({ setSignInPage, signInPage }: RegisterProps) => {
   } = useForm<Inputs>();
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
-    console.log(data);
-    navigate("/welcome"); // Example navigation after successful registration
+    const userInfo = { ...data, role: "user" };
+    registerMutation(userInfo);
   };
+
+  useEffect(() => {
+    if (isSuccess) {
+      toast.success("Registration Successful");
+      setSignInPage(true);
+    } else if (isError) {
+      toast.error((error as any).data.message);
+    }
+  }, [error, isError, isSuccess, navigate, setSignInPage]);
 
   return (
     <>
@@ -151,14 +167,14 @@ const Register = ({ setSignInPage, signInPage }: RegisterProps) => {
 
         <button
           type="submit"
-          disabled={!acceptTerms}
+          disabled={!acceptTerms || !password || passError !== "" || isLoading}
           className={`bg-primary text-white font-semibold w-full rounded-md py-3 ${
-            !acceptTerms ? "bg-opacity-70" : "bg-opacity-100"
+            !acceptTerms || isLoading ? "bg-opacity-70" : "bg-opacity-100"
           }`}
         >
-          Sign up with email
+          {isLoading ? <BtnLoader /> : " Sign up with email"}
         </button>
-        <p className="text-center text-black">
+        <p className="text-center text-black ">
           Have an account?{" "}
           <Link
             to="#"

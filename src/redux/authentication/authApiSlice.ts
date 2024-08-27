@@ -4,7 +4,7 @@ const authApiSlice = baseApiSlice.injectEndpoints({
   endpoints: (builder) => ({
     register: builder.mutation({
       query: (data) => ({
-        url: "/auth/register",
+        url: "/auth/signup",
         method: "POST",
         body: data,
       }),
