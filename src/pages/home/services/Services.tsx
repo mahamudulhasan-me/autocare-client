@@ -10,7 +10,10 @@ import ServiceCard from "./ServiceCard";
 export default function Services() {
   return (
     <div className="py-20">
-      <SectionHead />
+      <SectionHead
+        title="Offering Quality Services"
+        desc="There are many variations of passages of Lorem Ipsum typesetting industry has been the industry's standard dummy text ever since the been when an unknown printer."
+      />
       <div className="relative container mx-auto px-[4%] my-10 ">
         <Carousel>
           <CarouselContent className="space-x-5">

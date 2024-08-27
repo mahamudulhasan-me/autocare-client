@@ -1,9 +1,7 @@
-const SectionHead = () => {
+const SectionHead = ({ title, desc }: { title: string; desc: string }) => {
   return (
     <div className="w-full flex flex-col justify-center items-center ">
-      <h1 className="text-3xl font-bold uppercase text-slate-900">
-        Offering Quality Services
-      </h1>
+      <h1 className="text-3xl font-bold uppercase text-slate-900">{title}</h1>
       <div
         className="flex space-x-1 items-center mt-3"
         style={{ transform: "translateY(-50%) skewX(-10deg)" }}
@@ -13,9 +11,7 @@ const SectionHead = () => {
         <p className="w-24 h-1 bg-primary"></p>
       </div>
       <p className=" text-slate-900 font-[500] w-[60%] text-center mt-4">
-        There are many variations of passages of Lorem Ipsum typesetting
-        industry has been the industry's standard dummy text ever since the been
-        when an unknown printer.
+        {desc}
       </p>
     </div>
   );
