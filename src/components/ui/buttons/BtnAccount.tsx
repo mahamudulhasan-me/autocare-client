@@ -1,6 +1,11 @@
 import { Link } from "react-router-dom";
+import { logout } from "../../../redux/authentication/authSlice";
+import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import "./BtnAccountStyles.css";
 const BtnAccount = () => {
+  const { isAuthenticated } = useAppSelector((state) => state.auth);
+  const dispatch = useAppDispatch();
+  console.log(isAuthenticated);
   return (
     <div>
       <button className="Btn">
@@ -10,9 +15,15 @@ const BtnAccount = () => {
           </svg>
         </div>
 
-        <Link to={"/login"} className="text">
-          Login
-        </Link>
+        {!isAuthenticated ? (
+          <Link to={"/login"} className="text">
+            Login
+          </Link>
+        ) : (
+          <button className="text" onClick={() => dispatch(logout())}>
+            Logout
+          </button>
+        )}
       </button>
     </div>
   );

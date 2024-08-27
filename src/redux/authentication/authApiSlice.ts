@@ -1,4 +1,5 @@
 import baseApiSlice from "../baseApi/baseApiSlice";
+import { login } from "./authSlice";
 
 const authApiSlice = baseApiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -15,6 +16,15 @@ const authApiSlice = baseApiSlice.injectEndpoints({
         method: "POST",
         body: data,
       }),
+
+      async onQueryStarted(_arg, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
+          dispatch(login({ user: data.data, token: data.token }));
+        } catch (error) {
+          console.log(error);
+        }
+      },
     }),
   }),
 });
