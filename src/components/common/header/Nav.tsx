@@ -1,40 +1,42 @@
 import { Link } from "react-router-dom";
+import { useAppSelector } from "../../../redux/hooks";
 import BtnAccount from "../../ui/buttons/BtnAccount";
 
-const navItems = [
-  {
-    id: 1,
-    title: "Home",
-    path: "/",
-  },
-  {
-    id: 2,
-    title: "About Us",
-    path: "/about",
-  },
-  {
-    id: 3,
-    title: "Services",
-    path: "/services",
-  },
-  {
-    id: 4,
-    title: "Products",
-    path: "/products",
-  },
-  {
-    id: 5,
-    title: "Contact",
-    path: "/contact",
-  },
-  {
-    id: 6,
-    title: "Blog",
-    path: "/blog",
-  },
-];
-
 const Nav = () => {
+  const { user } = useAppSelector((state) => state.auth);
+
+  const navItems = [
+    {
+      id: 1,
+      title: "Home",
+      path: "/",
+    },
+    {
+      id: 2,
+      title: "About Us",
+      path: "/about",
+    },
+    {
+      id: 3,
+      title: "Services",
+      path: "/services",
+    },
+    {
+      id: 4,
+      title: "Products",
+      path: "/products",
+    },
+    {
+      id: 5,
+      title: "Contact",
+      path: "/contact",
+    },
+    {
+      id: 6,
+      title: "Dashboard",
+      path: `/dashboard/${user?.role as string}`,
+    },
+  ];
   return (
     <nav className="bg-slate-900 w-full">
       <div className="container mx-auto px-[4%] text-white font-semibold flex justify-between items-center">

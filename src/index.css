@@ -35,3 +35,24 @@ body {
 .socialLogin {
   @apply flex gap-2 px-5 py-2  rounded-lg font-semibold items-center justify-center;
 }
+
+/* dashboard style css  */
+.ant-layout-sider {
+  min-width: 250px !important;
+}
+.ant-layout-sider-collapsed {
+  min-width: 80px !important;
+}
+.ant-menu-item-selected {
+  background-color: #ee3131 !important;
+  border-radius: 4px !important;
+}
+.ant-menu-item,
+.ant-menu-title-content {
+  border-radius: 4px !important;
+  font-size: 18px !important;
+  text-transform: capitalize !important;
+}
+.ant-menu-item-icon {
+  font-size: 20px !important;
+}
