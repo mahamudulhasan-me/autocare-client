@@ -11,7 +11,7 @@ import img3 from "../../../assets/images/polishGallery/pic3.jpg";
 import SocialMedia from "./SocialMedia";
 const FooterSection = () => {
   return (
-    <footer className="bg-slate-900  mt-5">
+    <footer className="bg-slate-900">
       <div className="py-20 container mx-auto px-[4%] grid grid-cols-4 gap-x-8">
         <div>
           <img src={logo} alt="logo" className="w-52" />

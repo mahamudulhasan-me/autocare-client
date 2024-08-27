@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import "./BtnAccountStyles.css";
 const BtnAccount = () => {
   return (
@@ -9,7 +10,9 @@ const BtnAccount = () => {
           </svg>
         </div>
 
-        <div className="text">Login</div>
+        <Link to={"/login"} className="text">
+          Login
+        </Link>
       </button>
     </div>
   );
