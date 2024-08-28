@@ -5,7 +5,7 @@ import { MdLogout } from "react-icons/md";
 import { Outlet, useNavigate } from "react-router-dom";
 import logo from "../assets/images/logo.png";
 import { ADMIN_MENU_ITEMS, USER_MENU_ITEMS } from "../const/DashboardMenuItems";
-import { logout } from "../redux/authentication/authSlice";
+import { logout } from "../redux/features/authentication/authSlice";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 
 const { Header, Sider, Content } = Layout;
@@ -18,7 +18,7 @@ const userRole = {
 const DashboardLayout: React.FC = () => {
   const [collapsed, setCollapsed] = useState(false);
   const {
-    token: { colorBgContainer, borderRadiusLG },
+    token: { colorBgContainer },
   } = theme.useToken();
   const dispatch = useAppDispatch();
 
@@ -46,12 +46,6 @@ const DashboardLayout: React.FC = () => {
 
   const navigate = useNavigate();
 
-  /**
-   * Handles menu click event.
-   * @param {Object} param - The object containing the key of the clicked menu item.
-   * @param {string} param.key - The key of the clicked menu item.
-   * @returns {void}
-   */
   const handleMenuClick = ({ key }: { key: string }): void => {
     const menuItem = sideBarItems.find((item) => item.key === key);
     if (menuItem && menuItem.url) {
@@ -65,10 +59,28 @@ const DashboardLayout: React.FC = () => {
   };
 
   return (
-    <Layout className="min-h-screen">
-      <Sider trigger={null} collapsible collapsed={collapsed}>
-        <img src={logo} alt="" className="w-52  pt-3 pb-5 mx-auto" />
-        <div className="demo-logo-vertical" />
+    <Layout style={{ minHeight: "100vh" }}>
+      <Sider
+        trigger={null}
+        collapsible
+        collapsed={collapsed}
+        className="h-screen"
+        style={{
+          overflow: "auto",
+          position: "fixed",
+          left: 0,
+          top: 0,
+          bottom: 0,
+          zIndex: 1,
+        }}
+      >
+        <div className="flex justify-center items-center py-4">
+          <img
+            src={logo}
+            alt="Logo"
+            className={`w-40 ${collapsed ? "hidden" : "block"}`}
+          />
+        </div>
         <Menu
           theme="dark"
           mode="inline"
@@ -77,16 +89,28 @@ const DashboardLayout: React.FC = () => {
           onClick={handleMenuClick}
         />
         {isAuthenticated && (
-          <button
-            onClick={handleLogout}
-            className="bg-primary text-white absolute bottom-4 w-[96%] py-2  uppercase mx-1 rounded-md flex items-center justify-center gap-2"
-          >
-            <MdLogout size={20} /> Logout
-          </button>
+          <div className="absolute bottom-4 w-full px-4">
+            <button
+              onClick={handleLogout}
+              className="bg-primary text-white w-full py-2 uppercase rounded-md flex items-center justify-center gap-2"
+            >
+              <MdLogout size={20} /> {!collapsed && "Logout"}
+            </button>
+          </div>
         )}
       </Sider>
-      <Layout>
-        <Header style={{ padding: 0, background: colorBgContainer }}>
+      <Layout style={{ marginLeft: collapsed ? 80 : 250 }}>
+        <Header
+          className="shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px]"
+          style={{
+            padding: 0,
+            background: colorBgContainer,
+            position: "fixed",
+            width: `calc(100% - ${collapsed ? 80 : 250}px)`,
+            left: collapsed ? 80 : 250,
+            zIndex: 2,
+          }}
+        >
           <Button
             type="text"
             icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
@@ -95,16 +119,15 @@ const DashboardLayout: React.FC = () => {
               fontSize: "16px",
               width: 64,
               height: 64,
+              marginLeft: 16,
             }}
           />
         </Header>
         <Content
+          className="p-4 bg-white"
           style={{
-            margin: "24px 16px",
-            padding: 24,
-            minHeight: 280,
-            background: colorBgContainer,
-            borderRadius: borderRadiusLG,
+            marginTop: 64,
+            minHeight: "calc(100vh - 64px)",
           }}
         >
           <Outlet />

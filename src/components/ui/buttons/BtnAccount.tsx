@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { logout } from "../../../redux/authentication/authSlice";
+import { logout } from "../../../redux/features/authentication/authSlice";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import "./BtnAccountStyles.css";
 const BtnAccount = () => {

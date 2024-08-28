@@ -36,6 +36,27 @@ body {
   @apply flex gap-2 px-5 py-2  rounded-lg font-semibold items-center justify-center;
 }
 
+.modal-input {
+  @apply w-full px-4 py-1.5 border border-slate-300 rounded-md shadow-sm transition duration-300 ease-in-out transform focus:-translate-y-1 hover:shadow-lg hover:border-primary bg-slate-50   focus:outline-primary/70;
+}
+.modal-label {
+  @apply block  text-sm font-semibold mb-1;
+}
+.input {
+  max-width: 190px;
+  display: none;
+}
+
+.labelFile {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  align-items: center;
+  text-align: center;
+  padding: 4px;
+  cursor: pointer;
+}
 /* dashboard style css  */
 .ant-layout-sider {
   min-width: 250px !important;
@@ -55,4 +76,8 @@ body {
 }
 .ant-menu-item-icon {
   font-size: 20px !important;
+}
+.ant-btn-primary {
+  background-color: #ee3131 !important;
+  border-color: #ee3131 !important;
 }

@@ -7,8 +7,9 @@ import {
   REHYDRATE,
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
-import { authReducer } from "./authentication/authSlice";
 import baseApiSlice from "./baseApi/baseApiSlice";
+import { authReducer } from "./features/authentication/authSlice";
+import { imagebbApiSlice } from "./imageBBApi/imageBBpi";
 
 const persistConfig = {
   key: "auth",
@@ -20,6 +21,7 @@ const persistAuthReducer = persistReducer(persistConfig, authReducer);
 export const store = configureStore({
   reducer: {
     [baseApiSlice.reducerPath]: baseApiSlice.reducer,
+    [imagebbApiSlice.reducerPath]: imagebbApiSlice.reducer,
     auth: persistAuthReducer,
   },
   middleware: (getDefaultMiddleware) =>
@@ -27,7 +29,7 @@ export const store = configureStore({
       serializableCheck: {
         ignoredActions: [PERSIST, REHYDRATE, PURGE],
       },
-    }).concat(baseApiSlice.middleware),
+    }).concat(baseApiSlice.middleware, imagebbApiSlice.middleware),
   devTools: import.meta.env.NODE_ENV !== "production",
 });
 

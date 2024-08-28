@@ -1,4 +1,4 @@
-import baseApiSlice from "../baseApi/baseApiSlice";
+import baseApiSlice from "../../baseApi/baseApiSlice";
 import { login } from "./authSlice";
 
 const authApiSlice = baseApiSlice.injectEndpoints({

@@ -13,7 +13,7 @@ import { toast } from "sonner";
 import bg from "../../assets/images/banner/slide4.jpg";
 import logo from "../../assets/images/logo.png";
 import BtnLoader from "../../components/ui/loaders/BtnLoader";
-import { useLoginMutation } from "../../redux/authentication/authApiSlice";
+import { useLoginMutation } from "../../redux/features/authentication/authApiSlice";
 import Register from "./Register";
 
 interface Inputs {

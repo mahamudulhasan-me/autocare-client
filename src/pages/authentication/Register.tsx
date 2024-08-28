@@ -5,7 +5,7 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import BtnLoader from "../../components/ui/loaders/BtnLoader";
-import { useRegisterMutation } from "../../redux/authentication/authApiSlice";
+import { useRegisterMutation } from "../../redux/features/authentication/authApiSlice";
 
 interface RegisterProps {
   setSignInPage: (value: boolean) => void;
