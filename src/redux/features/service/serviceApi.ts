@@ -7,6 +7,7 @@ const serviceApiSlice = baseApiSlice.injectEndpoints({
         url: "/services",
         method: "GET",
       }),
+      providesTags: ["Services"],
     }),
     createService: builder.mutation({
       query: (data) => ({
@@ -14,6 +15,7 @@ const serviceApiSlice = baseApiSlice.injectEndpoints({
         method: "POST",
         body: data,
       }),
+      invalidatesTags: ["Services"],
     }),
   }),
 });

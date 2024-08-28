@@ -63,10 +63,15 @@ const onChange: TableProps<DataType>["onChange"] = (
 };
 
 const ServiceTable: React.FC = () => {
-  const { data: services } = useGetAllServicesQuery({});
-  console.log(services);
+  const { data: services, isLoading, isFetching } = useGetAllServicesQuery({});
+
   return (
-    <Table columns={columns} dataSource={services?.data} onChange={onChange} />
+    <Table
+      columns={columns}
+      loading={isLoading || isFetching}
+      dataSource={services?.data}
+      onChange={onChange}
+    />
   );
 };
 export default ServiceTable;

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Button, Modal } from "antd";
 import React, { ChangeEvent, useEffect, useState } from "react";
@@ -15,19 +16,12 @@ interface Inputs {
   description?: string;
   coverImage?: File;
 }
-type UploadedFile = {
-  lastModified: number;
-  lastModifiedDate: Date;
-  name: string;
-  size: number;
-  type: string;
-  webkitRelativePath: string;
-};
 
 const CreateServiceModal: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const [coverImage, setCoverImage] = useState<UploadedFile>();
-  console.log(coverImage);
+  const [coverImage, setCoverImage] = useState<unknown>();
+  const { register, handleSubmit, reset } = useForm<Inputs>();
+
   const [
     uploadImage,
     { isLoading: isUploading, isError: isUploadError, error: uploadError },
@@ -49,36 +43,20 @@ const CreateServiceModal: React.FC = () => {
 
   const onFileChange = (e: ChangeEvent<HTMLInputElement>): void => {
     if (e.target.files?.length) {
-      const file: File = e.target.files[0];
-
-      const uploadedFile: UploadedFile = {
-        lastModified: file.lastModified,
-        lastModifiedDate: new Date(file.lastModified), // manually create lastModifiedDate
-        name: file.name,
-        size: file.size,
-        type: file.type,
-        webkitRelativePath: file.webkitRelativePath,
-      };
-
-      setCoverImage(uploadedFile);
+      setCoverImage(e.target.files[0]);
     }
   };
 
-  const { register, handleSubmit, reset } = useForm<Inputs>();
-
-  const onSubmit: SubmitHandler<Inputs> = async (
-    data: Inputs
-  ): Promise<void> => {
+  const onSubmit: SubmitHandler<Inputs> = async (data) => {
     try {
-      // Upload image
-      let coverImageUrl: string | undefined;
-      if (coverImage instanceof File) {
+      let coverImageUrl;
+      if (coverImage) {
         const formData = new FormData();
+        // @ts-ignore
         formData.append("image", coverImage);
         const imageUploadResponse = await uploadImage(formData).unwrap();
         coverImageUrl = imageUploadResponse?.data?.url;
       }
-
       const serviceData = {
         name: data.name,
         duration: Number(data.duration),
@@ -86,11 +64,10 @@ const CreateServiceModal: React.FC = () => {
         description: data.description,
         coverImage: coverImageUrl,
       };
-
-      await createService(serviceData).unwrap();
+      await createService(serviceData);
     } catch (error) {
       toast.error("Something went wrong");
-      console.error(error);
+      console.log(error);
     }
   };
 
@@ -170,6 +147,7 @@ const CreateServiceModal: React.FC = () => {
                   <>
                     <IoCloudUploadOutline size={52} />
                     {coverImage ? (
+                      // @ts-ignore
                       <p className="ml-2">{coverImage?.name}</p>
                     ) : (
                       <p className="text-sm"> Click to Upload Image</p>
@@ -193,7 +171,7 @@ const CreateServiceModal: React.FC = () => {
             <Button
               htmlType="submit"
               type="primary"
-              loading={isUploading || isLoading}
+              loading={isLoading || isUploading}
             >
               Submit
             </Button>
