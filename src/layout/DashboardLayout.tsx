@@ -1,12 +1,12 @@
 import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
 import { Button, Layout, Menu, theme } from "antd";
-import React, { useState } from "react";
-import logo from "../../assets/images/logo.png";
-import {
-  ADMIN_MENU_ITEMS,
-  USER_MENU_ITEMS,
-} from "../../const/DashboardMenuItems";
-import { useAppSelector } from "../../redux/hooks";
+import React, { ReactNode, useState } from "react";
+import { MdLogout } from "react-icons/md";
+import { Outlet, useNavigate } from "react-router-dom";
+import logo from "../assets/images/logo.png";
+import { ADMIN_MENU_ITEMS, USER_MENU_ITEMS } from "../const/DashboardMenuItems";
+import { logout } from "../redux/authentication/authSlice";
+import { useAppDispatch, useAppSelector } from "../redux/hooks";
 
 const { Header, Sider, Content } = Layout;
 
@@ -15,15 +15,21 @@ const userRole = {
   USER: "user",
 };
 
-const Dashboard: React.FC = () => {
+const DashboardLayout: React.FC = () => {
   const [collapsed, setCollapsed] = useState(false);
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
+  const dispatch = useAppDispatch();
 
   const { user, isAuthenticated } = useAppSelector((state) => state.auth);
   const role = user?.role;
-  let sideBarItems;
+  let sideBarItems: {
+    key: string;
+    icon: ReactNode;
+    label: string;
+    url: string;
+  }[] = [];
 
   if (isAuthenticated) {
     switch (role) {
@@ -37,6 +43,27 @@ const Dashboard: React.FC = () => {
         break;
     }
   }
+
+  const navigate = useNavigate();
+
+  /**
+   * Handles menu click event.
+   * @param {Object} param - The object containing the key of the clicked menu item.
+   * @param {string} param.key - The key of the clicked menu item.
+   * @returns {void}
+   */
+  const handleMenuClick = ({ key }: { key: string }): void => {
+    const menuItem = sideBarItems.find((item) => item.key === key);
+    if (menuItem && menuItem.url) {
+      navigate(menuItem.url);
+    }
+  };
+
+  const handleLogout = (): void => {
+    dispatch(logout());
+    navigate("/");
+  };
+
   return (
     <Layout className="min-h-screen">
       <Sider trigger={null} collapsible collapsed={collapsed}>
@@ -47,7 +74,16 @@ const Dashboard: React.FC = () => {
           mode="inline"
           defaultSelectedKeys={["1"]}
           items={sideBarItems}
+          onClick={handleMenuClick}
         />
+        {isAuthenticated && (
+          <button
+            onClick={handleLogout}
+            className="bg-primary text-white absolute bottom-4 w-[96%] py-2  uppercase mx-1 rounded-md flex items-center justify-center gap-2"
+          >
+            <MdLogout size={20} /> Logout
+          </button>
+        )}
       </Sider>
       <Layout>
         <Header style={{ padding: 0, background: colorBgContainer }}>
@@ -71,11 +107,11 @@ const Dashboard: React.FC = () => {
             borderRadius: borderRadiusLG,
           }}
         >
-          Content
+          <Outlet />
         </Content>
       </Layout>
     </Layout>
   );
 };
 
-export default Dashboard;
+export default DashboardLayout;

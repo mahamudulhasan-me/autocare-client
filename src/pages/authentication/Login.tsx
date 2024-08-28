@@ -45,7 +45,9 @@ const Login = () => {
   useEffect(() => {
     if (isError) {
       setError((serverError as any)?.data?.message);
-      toast.error((serverError as any)?.data?.message);
+      toast.error(
+        (serverError as any)?.data?.message || "Something went wrong"
+      );
     }
     if (isSuccess) {
       toast.success("Login Successful");
