@@ -25,6 +25,13 @@ const serviceApiSlice = baseApiSlice.injectEndpoints({
       }),
       invalidatesTags: ["Services"],
     }),
+    deleteService: builder.mutation({
+      query: (id) => ({
+        url: `/services/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["Services"],
+    }),
   }),
 });
 
@@ -32,4 +39,5 @@ export const {
   useGetAllServicesQuery,
   useCreateServiceMutation,
   useUpdateServiceMutation,
+  useDeleteServiceMutation,
 } = serviceApiSlice;
