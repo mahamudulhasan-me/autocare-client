@@ -17,8 +17,19 @@ const serviceApiSlice = baseApiSlice.injectEndpoints({
       }),
       invalidatesTags: ["Services"],
     }),
+    updateService: builder.mutation({
+      query: ({ id, data }) => ({
+        url: `/services/${id}`,
+        method: "PUT",
+        body: data,
+      }),
+      invalidatesTags: ["Services"],
+    }),
   }),
 });
 
-export const { useGetAllServicesQuery, useCreateServiceMutation } =
-  serviceApiSlice;
+export const {
+  useGetAllServicesQuery,
+  useCreateServiceMutation,
+  useUpdateServiceMutation,
+} = serviceApiSlice;
