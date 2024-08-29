@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Button, Modal } from "antd";
 import React, { ChangeEvent, useEffect, useState } from "react";
@@ -19,25 +18,21 @@ interface Inputs {
   duration: number;
   price: number;
   description?: string;
-  coverImage?: File;
+  coverImage?: File | string | null;
 }
+
 const initialState = {
   name: "",
   duration: 0,
   price: 0,
   description: "",
+  coverImage: "",
 };
-/**
- * Renders a modal component for creating a new service.
- *
- * @returns {JSX.Element} The rendered CreateServiceModal component.
- */
-const ServiceMutationModal: React.FC = () => {
-  // State variables
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const [coverImage, setCoverImage] = useState<unknown>();
 
-  // Hooks
+const ServiceMutationModal: React.FC = () => {
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [coverImage, setCoverImage] = useState<File | string | null>(null);
+
   const { register, handleSubmit, reset } = useForm<Inputs>({
     defaultValues: initialState,
   });
@@ -46,7 +41,6 @@ const ServiceMutationModal: React.FC = () => {
     (state) => state.updateService
   );
 
-  // Fetch mutation functions
   const [
     uploadImage,
     { isLoading: isUploading, isError: isUploadError, error: uploadError },
@@ -63,74 +57,58 @@ const ServiceMutationModal: React.FC = () => {
     },
   ] = useUpdateServiceMutation();
 
-  /**
-   * Shows the modal.
-   */
   const showModal = (): void => {
     setIsModalOpen(true);
     reset(initialState);
   };
 
-  /**
-   * Handles the OK button click event.
-   */
   const handleOk = (): void => {
     setIsModalOpen(false);
   };
 
-  /**
-   * Handles the Cancel button click event.
-   */
   const handleCancel = (): void => {
     setIsModalOpen(false);
     dispatch(enableUpdateMode({ updateMode: false, data: null }));
+    setCoverImage(null); // Reset cover image on cancel
     reset();
   };
 
-  /**
-   * Populates the form with existing data when editing.
-   */
   useEffect(() => {
-    if (isUpdateMode) {
+    if (isUpdateMode && updateServiceData) {
       setIsModalOpen(true);
-      // @ts-ignore
-      reset(updateServiceData);
+      reset({ ...updateServiceData });
+      setCoverImage(updateServiceData?.coverImage || null); // Set existing image
     }
   }, [updateServiceData, reset, isUpdateMode]);
 
-  /**
-   * Handles the file change event.
-   *
-   * @param {ChangeEvent<HTMLInputElement>} e - The event object.
-   */
   const onFileChange = (e: ChangeEvent<HTMLInputElement>): void => {
     if (e.target.files?.length) {
       setCoverImage(e.target.files[0]);
     }
   };
 
-  /**
-   * Handles the form submission.
-   *
-   * @param {Inputs} data - The form data.
-   */
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     try {
       let coverImageUrl;
 
-      if (coverImage) {
+      if (coverImage && typeof coverImage !== "string") {
         const formData = new FormData();
-        // @ts-ignore
         formData.append("image", coverImage);
         const imageUploadResponse = await uploadImage(formData).unwrap();
         coverImageUrl = imageUploadResponse?.data?.url;
+      } else if (isUpdateMode && typeof coverImage === "string") {
+        coverImageUrl = coverImage;
+      } else {
+        toast.error("Cover image is required");
+        return;
       }
+
       const serviceData = {
         name: data.name,
         duration: Number(data.duration),
         price: Number(data.price),
         description: data.description,
-        coverImage: coverImageUrl || updateServiceData?.coverImage,
+        coverImage: coverImageUrl,
       };
 
       if (isUpdateMode) {
@@ -147,29 +125,24 @@ const ServiceMutationModal: React.FC = () => {
     }
   };
 
-  /**
-   * Handles the success or error messages.
-   */
   useEffect(() => {
     if (isSuccess) {
       toast.success("Service created successfully");
+      handleCancel(); // Close modal and reset state after success
     } else if (isUpdateSuccess) {
       toast.success("Service updated successfully");
+      handleCancel();
     }
-    handleCancel();
     reset();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isError, isSuccess, isUpdateSuccess, reset, serverError]);
+  }, [isSuccess, isUpdateSuccess, reset]);
 
-  /**
-   * Handles the  error messages.
-   */
   useEffect(() => {
     if (isError) {
       toast.error((serverError as any)?.data?.message);
     } else if (isUploadError) {
       toast(
-        `Failed to upload image-${(uploadError as any).data.error.message}`
+        `Failed to upload image - ${(uploadError as any).data.error.message}`
       );
     } else if (isUpdateError) {
       toast.error((updateError as any).data.error.message);
@@ -195,7 +168,7 @@ const ServiceMutationModal: React.FC = () => {
       >
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="border-t border-slate-300 w-full pt-4  space-y-4"
+          className="border-t border-slate-300 w-full pt-4 space-y-4"
         >
           <div>
             <label className="modal-label">Name*</label>
@@ -224,39 +197,40 @@ const ServiceMutationModal: React.FC = () => {
               />
             </aside>
           </div>
+
           <div className="grid grid-cols-12 gap-x-4">
             <aside className="col-span-8">
-              <label className="modal-label">Description</label>
+              <label className="modal-label">Description*</label>
               <textarea
                 className="modal-input"
                 rows={4}
-                {...register("description")}
+                {...register("description", { required: true })}
               />
             </aside>
             <aside className="col-span-4">
-              <>
-                <label className="modal-label">Cover Image</label>
-                <label htmlFor="file" className="labelFile modal-input">
-                  <>
-                    <IoCloudUploadOutline size={52} />
-                    {coverImage ? (
-                      // @ts-ignore
-                      <p className="ml-2">{coverImage?.name}</p>
-                    ) : (
-                      <p className="text-sm"> Click to Upload Image</p>
-                    )}
-                  </>
-                </label>
-                <input
-                  className="input"
-                  id="file"
-                  type="file"
-                  name="coverImage"
-                  onChange={(e) => onFileChange(e)}
-                />
-              </>
+              <label className="modal-label">Cover Image*</label>
+              <label htmlFor="file" className="labelFile modal-input">
+                <>
+                  <IoCloudUploadOutline size={52} />
+                  {coverImage && typeof coverImage === "object" ? (
+                    <p className="ml-2">{(coverImage as File).name}</p>
+                  ) : coverImage && typeof coverImage === "string" ? (
+                    <img src={coverImage} alt="" />
+                  ) : (
+                    <p className="text-sm">Click to Upload Image</p>
+                  )}
+                </>
+              </label>
+              <input
+                className="input"
+                id="file"
+                type="file"
+                name="coverImage"
+                onChange={onFileChange}
+              />
             </aside>
           </div>
+
           <div className="flex justify-end items-center gap-4">
             <Button htmlType="submit" type="default" onClick={handleCancel}>
               Cancel
@@ -274,15 +248,5 @@ const ServiceMutationModal: React.FC = () => {
     </>
   );
 };
-
-ServiceMutationModal.displayName = "CreateServiceModal";
-
-ServiceMutationModal.displayName = "CreateServiceModal";
-
-/**
- * Renders a modal component for creating a new service.
- *
- * @returns {JSX.Element} The rendered CreateServiceModal component.
- */
 
 export default ServiceMutationModal;
