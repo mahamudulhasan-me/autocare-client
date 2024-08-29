@@ -1,15 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { TableColumnsType, TableProps } from "antd";
-import { Popconfirm, Table, Tooltip } from "antd";
+import { Popconfirm, Table, Tag, Tooltip } from "antd";
 import React, { useEffect } from "react";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { FiEdit } from "react-icons/fi";
 import { toast } from "sonner";
-import {
-  useDeleteServiceMutation,
-  useGetAllServicesQuery,
-} from "../../../../redux/features/service/serviceApi";
+import { useDeleteServiceMutation } from "../../../../redux/features/service/serviceApi";
 import { enableUpdateMode } from "../../../../redux/features/update/updateServiceSlice";
+import { useGetAllUsersQuery } from "../../../../redux/features/users/usesApi";
 import { useAppDispatch } from "../../../../redux/hooks";
 import { IService } from "../../../../types";
 
@@ -22,8 +20,8 @@ const onChange: TableProps<IService>["onChange"] = (
   console.log("params", pagination, filters, sorter, extra);
 };
 
-const ServiceTable: React.FC = () => {
-  const { data: services, isLoading, isFetching } = useGetAllServicesQuery({});
+const UsersTable: React.FC = () => {
+  const { data: users, isLoading, isFetching } = useGetAllUsersQuery({});
   const dispatch = useAppDispatch();
   const [deleteService, { isError, isSuccess, error }] =
     useDeleteServiceMutation();
@@ -33,16 +31,22 @@ const ServiceTable: React.FC = () => {
       dataIndex: "name",
     },
     {
-      title: "Duration",
-      dataIndex: "duration",
+      title: "Email",
+      dataIndex: "email",
     },
     {
-      title: "Price",
-      dataIndex: "price",
-      sorter: {
-        compare: (a, b) => a.price - b.price,
-        multiple: 2,
-      },
+      title: "Phone",
+      dataIndex: "phone",
+    },
+
+    {
+      title: "Role",
+      dataIndex: "role",
+      render: (role) => <Tag color="geekblue">{role.toUpperCase()}</Tag>,
+    },
+    {
+      title: "Address",
+      dataIndex: "address",
     },
     {
       title: "Action",
@@ -84,10 +88,10 @@ const ServiceTable: React.FC = () => {
     <Table
       columns={columns}
       loading={isLoading || isFetching}
-      dataSource={services?.data}
+      dataSource={users?.data}
       onChange={onChange}
       className="table-shadow rounded-md"
     />
   );
 };
-export default ServiceTable;
+export default UsersTable;

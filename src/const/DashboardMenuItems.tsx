@@ -27,6 +27,18 @@ export const ADMIN_MENU_ITEMS = [
     icon: <FaUsersCog />,
     label: "Users",
     url: "/dashboard/admin/users",
+    children: [
+      {
+        key: "5",
+        label: "User Bookings",
+        url: "/dashboard/admin/users-bookings",
+      },
+      {
+        key: "6",
+        label: "User Management",
+        url: "/dashboard/admin/users-management",
+      },
+    ],
   },
 ];
 

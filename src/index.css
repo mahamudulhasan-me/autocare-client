@@ -42,6 +42,12 @@ body {
 .modal-label {
   @apply block  text-sm font-semibold mb-1;
 }
+.title-shadow {
+  @apply shadow-[0px_2px_3px_-1px_rgba(0,0,0,0.1),0px_1px_0px_0px_rgba(25,28,33,0.02),0px_0px_0px_1px_rgba(25,28,33,0.08)];
+}
+.table-shadow {
+  @apply shadow-[0px_2px_3px_-1px_rgba(0,0,0,0.1),0px_1px_0px_0px_rgba(25,28,33,0.02),0px_0px_0px_1px_rgba(25,28,33,0.08)];
+}
 .input {
   max-width: 190px;
   display: none;
@@ -71,7 +77,7 @@ body {
 .ant-menu-item,
 .ant-menu-title-content {
   border-radius: 4px !important;
-  font-size: 18px !important;
+  font-size: 16px !important;
   text-transform: capitalize !important;
 }
 .ant-menu-item-icon {

@@ -5,10 +5,8 @@ import React, { useEffect } from "react";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { FiEdit } from "react-icons/fi";
 import { toast } from "sonner";
-import {
-  useDeleteServiceMutation,
-  useGetAllServicesQuery,
-} from "../../../../redux/features/service/serviceApi";
+import { useGetAllBookingsQuery } from "../../../../redux/features/booking/bookingApi";
+import { useDeleteServiceMutation } from "../../../../redux/features/service/serviceApi";
 import { enableUpdateMode } from "../../../../redux/features/update/updateServiceSlice";
 import { useAppDispatch } from "../../../../redux/hooks";
 import { IService } from "../../../../types";
@@ -22,28 +20,34 @@ const onChange: TableProps<IService>["onChange"] = (
   console.log("params", pagination, filters, sorter, extra);
 };
 
-const ServiceTable: React.FC = () => {
-  const { data: services, isLoading, isFetching } = useGetAllServicesQuery({});
+const BookingsTable: React.FC = () => {
+  const { data: bookings, isLoading, isFetching } = useGetAllBookingsQuery({});
+  console.log(bookings);
   const dispatch = useAppDispatch();
   const [deleteService, { isError, isSuccess, error }] =
     useDeleteServiceMutation();
   const columns: TableColumnsType<IService> = [
     {
-      title: "Name",
-      dataIndex: "name",
+      title: "Customer Name",
+      dataIndex: "customer",
+      render: (customer) => customer?.name,
     },
     {
-      title: "Duration",
-      dataIndex: "duration",
+      title: "Service",
+      dataIndex: "service",
+      render: (service) => service?.name,
     },
     {
       title: "Price",
-      dataIndex: "price",
-      sorter: {
-        compare: (a, b) => a.price - b.price,
-        multiple: 2,
-      },
+      dataIndex: "service",
+      render: (service) => <span>${service?.price}</span>,
     },
+    {
+      title: "Vehicle Type",
+      dataIndex: "vehicleType",
+      render: (vehicleType) => vehicleType?.toUpperCase(),
+    },
+
     {
       title: "Action",
       dataIndex: "action",
@@ -84,10 +88,10 @@ const ServiceTable: React.FC = () => {
     <Table
       columns={columns}
       loading={isLoading || isFetching}
-      dataSource={services?.data}
+      dataSource={bookings?.data}
       onChange={onChange}
       className="table-shadow rounded-md"
     />
   );
 };
-export default ServiceTable;
+export default BookingsTable;

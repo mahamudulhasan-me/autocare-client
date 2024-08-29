@@ -5,7 +5,8 @@ import Login from "../pages/authentication/Login";
 import AdminDashboard from "../pages/dashboard/adminDashboard/AdminDashboard";
 import AdminServices from "../pages/dashboard/adminDashboard/serviceManagement/AdminServices";
 import AdminSlots from "../pages/dashboard/adminDashboard/slotManagement/AdminSlots";
-import AdminUserManagement from "../pages/dashboard/adminDashboard/AdminUserManagement";
+import AdminUserManagement from "../pages/dashboard/adminDashboard/user/UserManagement";
+import UserBooking from "../pages/dashboard/adminDashboard/user/BookingAllUsers";
 import HomePage from "../pages/home";
 
 const router = createBrowserRouter([
@@ -40,7 +41,11 @@ const router = createBrowserRouter([
         element: <AdminSlots />,
       },
       {
-        path: "/dashboard/admin/users",
+        path: "/dashboard/admin/users-bookings",
+        element: <UserBooking />,
+      },
+      {
+        path: "/dashboard/admin/users-management",
         element: <AdminUserManagement />,
       },
       {

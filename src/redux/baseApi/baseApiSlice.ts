@@ -16,7 +16,7 @@ const baseApiSlice = createApi({
     },
   }),
   endpoints: () => ({}),
-  tagTypes: ["Services", "Slots", "Users"],
+  tagTypes: ["Services", "Slots", "Users", "Bookings"],
 });
 
 export default baseApiSlice;

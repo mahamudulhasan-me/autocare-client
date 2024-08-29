@@ -29,6 +29,11 @@ const DashboardLayout: React.FC = () => {
     icon: ReactNode;
     label: string;
     url: string;
+    children?: {
+      key: string;
+      label: string;
+      url: string;
+    }[];
   }[] = [];
 
   if (isAuthenticated) {
@@ -47,7 +52,10 @@ const DashboardLayout: React.FC = () => {
   const navigate = useNavigate();
 
   const handleMenuClick = ({ key }: { key: string }): void => {
-    const menuItem = sideBarItems.find((item) => item.key === key);
+    const menuItem = sideBarItems
+      .flatMap((item) => (item.children ? [item, ...item.children] : item))
+      .find((item) => item.key === key);
+
     if (menuItem && menuItem.url) {
       navigate(menuItem.url);
     }
