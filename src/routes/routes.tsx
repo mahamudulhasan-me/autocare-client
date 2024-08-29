@@ -4,7 +4,7 @@ import MainLayout from "../layout/MainLayout";
 import Login from "../pages/authentication/Login";
 import AdminDashboard from "../pages/dashboard/adminDashboard/AdminDashboard";
 import AdminServices from "../pages/dashboard/adminDashboard/serviceManagement/AdminServices";
-import AdminSlots from "../pages/dashboard/adminDashboard/AdminSlots";
+import AdminSlots from "../pages/dashboard/adminDashboard/slotManagement/AdminSlots";
 import AdminUserManagement from "../pages/dashboard/adminDashboard/AdminUserManagement";
 import HomePage from "../pages/home";
 
