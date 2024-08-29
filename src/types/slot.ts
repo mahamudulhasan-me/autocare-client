@@ -6,5 +6,6 @@ export interface ISlot {
   date: Date;
   startTime: string;
   endTime: string;
-  isBooked: string;
+  isBooked: boolean;
+  status: "cancelled" | "booked" | "available";
 }

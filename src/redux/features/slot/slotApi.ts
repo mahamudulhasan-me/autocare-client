@@ -7,8 +7,29 @@ const slotApiSlice = baseApiSlice.injectEndpoints({
         url: "/slots",
         method: "GET",
       }),
+      providesTags: ["Slots"],
+    }),
+    createSlot: builder.mutation({
+      query: (data) => ({
+        url: "/services/slots/",
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["Slots"],
+    }),
+    updateSlot: builder.mutation({
+      query: ({ id, data }) => ({
+        url: `/slots/${id}`,
+        method: "PUT",
+        body: data,
+      }),
+      invalidatesTags: ["Slots"],
     }),
   }),
 });
 
-export const { useGetAllSlotsQuery } = slotApiSlice;
+export const {
+  useGetAllSlotsQuery,
+  useCreateSlotMutation,
+  useUpdateSlotMutation,
+} = slotApiSlice;

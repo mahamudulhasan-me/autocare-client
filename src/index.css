@@ -80,4 +80,12 @@ body {
 .ant-btn-primary {
   background-color: #ee3131 !important;
   border-color: #ee3131 !important;
+  color: #ffff;
 }
+
+/* .ant-select-selector:hover {
+  border-color: #ee3131 !important;
+}
+.ant-select-selection-search-input {
+  border-color: #ee3131 !important;
+} */

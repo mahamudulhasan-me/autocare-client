@@ -1,124 +1,67 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Button, Modal } from "antd";
-import React, { ChangeEvent, useEffect, useState } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
-import { IoCloudUploadOutline } from "react-icons/io5";
+import { Button, DatePicker, Modal, Select, TimePicker } from "antd";
+import dayjs from "dayjs";
+import React, { FormEvent, useEffect, useState } from "react";
 import { toast } from "sonner";
 import BtnAdd from "../../../../components/ui/buttons/BtnAdd";
-import {
-  useCreateServiceMutation,
-  useUpdateServiceMutation,
-} from "../../../../redux/features/service/serviceApi";
-import { enableUpdateMode } from "../../../../redux/features/update/updateServiceSlice";
-import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
-import { useUploadImageMutation } from "../../../../redux/imageBBApi/imageBBpi";
-
-interface Inputs {
-  name: string;
-  duration: number;
-  price: number;
-  description?: string;
-  coverImage?: File | string | null;
-}
-
-const initialState = {
-  name: "",
-  duration: 0,
-  price: 0,
-  description: "",
-  coverImage: "",
-};
+import { useGetAllServicesQuery } from "../../../../redux/features/service/serviceApi";
+import { useCreateSlotMutation } from "../../../../redux/features/slot/slotApi";
+import { useAppSelector } from "../../../../redux/hooks";
+import { IService } from "../../../../types";
 
 const SlotMutationModal: React.FC = () => {
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const [coverImage, setCoverImage] = useState<File | string | null>(null);
-
-  const { register, handleSubmit, reset } = useForm<Inputs>({
-    defaultValues: initialState,
-  });
-  const dispatch = useAppDispatch();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [serviceId, setServiceId] = useState("");
+  const [date, setDate] = useState<dayjs.Dayjs | null>(null);
+  const [startTime, setStartTime] = useState<dayjs.Dayjs | null>(null);
+  const [endTime, setEndTime] = useState<dayjs.Dayjs | null>(null);
+  const { data: services, isLoading: isLoadingServices } =
+    useGetAllServicesQuery({});
+  const [createSlot, { isLoading, isSuccess, isError, error }] =
+    useCreateSlotMutation();
   const { isUpdateMode, updateService: updateServiceData } = useAppSelector(
     (state) => state.updateService
   );
 
-  const [
-    uploadImage,
-    { isLoading: isUploading, isError: isUploadError, error: uploadError },
-  ] = useUploadImageMutation();
-  const [createService, { isError, isSuccess, error: serverError, isLoading }] =
-    useCreateServiceMutation();
-  const [
-    updateService,
-    {
-      isError: isUpdateError,
-      isSuccess: isUpdateSuccess,
-      error: updateError,
-      isLoading: isUpdateLoading,
-    },
-  ] = useUpdateServiceMutation();
-
-  const showModal = (): void => {
-    setIsModalOpen(true);
-    reset(initialState);
-  };
-
-  const handleOk = (): void => {
-    setIsModalOpen(false);
-  };
-
-  const handleCancel = (): void => {
-    setIsModalOpen(false);
-    dispatch(enableUpdateMode({ updateMode: false, data: null }));
-    setCoverImage(null); // Reset cover image on cancel
-    reset();
-  };
-
   useEffect(() => {
     if (isUpdateMode && updateServiceData) {
       setIsModalOpen(true);
-      reset({ ...updateServiceData });
-      setCoverImage(updateServiceData?.coverImage || null); // Set existing image
     }
-  }, [updateServiceData, reset, isUpdateMode]);
+  }, [isUpdateMode, updateServiceData]);
 
-  const onFileChange = (e: ChangeEvent<HTMLInputElement>): void => {
-    if (e.target.files?.length) {
-      setCoverImage(e.target.files[0]);
-    }
-  };
-
-  const onSubmit: SubmitHandler<Inputs> = async (data) => {
+  const handleSubmitToCreateSlot = async (e: FormEvent) => {
+    e.preventDefault();
     try {
-      let coverImageUrl;
-
-      if (coverImage && typeof coverImage !== "string") {
-        const formData = new FormData();
-        formData.append("image", coverImage);
-        const imageUploadResponse = await uploadImage(formData).unwrap();
-        coverImageUrl = imageUploadResponse?.data?.url;
-      } else if (isUpdateMode && typeof coverImage === "string") {
-        coverImageUrl = coverImage;
-      } else {
-        toast.error("Cover image is required");
+      if (!serviceId) {
+        toast.error("Please select service");
         return;
       }
-
-      const serviceData = {
-        name: data.name,
-        duration: Number(data.duration),
-        price: Number(data.price),
-        description: data.description,
-        coverImage: coverImageUrl,
-      };
-
-      if (isUpdateMode) {
-        await updateService({
-          id: updateServiceData?._id,
-          data: serviceData,
-        });
-      } else {
-        await createService(serviceData);
+      if (!date) {
+        toast.error("Please select date");
+        return;
       }
+      if (!startTime) {
+        toast.error("Please select start time");
+        return;
+      }
+      if (!endTime) {
+        toast.error("Please select end time");
+        return;
+      }
+      if (
+        startTime.isAfter(endTime) ||
+        endTime.isBefore(startTime) ||
+        endTime.isSame(startTime)
+      ) {
+        toast.error("End time should be greater than start time");
+        return;
+      }
+      await createSlot({
+        service: serviceId,
+        date: date.toDate(),
+        startTime: startTime?.format("HH:mm") || "",
+        endTime: endTime?.format("HH:mm") || "",
+      });
     } catch (error) {
       toast.error("Something went wrong");
       console.log(error);
@@ -127,119 +70,90 @@ const SlotMutationModal: React.FC = () => {
 
   useEffect(() => {
     if (isSuccess) {
-      toast.success("Service created successfully");
-      handleCancel(); // Close modal and reset state after success
-    } else if (isUpdateSuccess) {
-      toast.success("Service updated successfully");
-      handleCancel();
+      toast.success("Slot created successfully");
     }
-    reset();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isSuccess, isUpdateSuccess, reset]);
+    setIsModalOpen(false);
+    setServiceId("");
+    setDate(null);
+    setStartTime(null);
+    setEndTime(null);
+  }, [isSuccess]);
 
   useEffect(() => {
     if (isError) {
-      toast.error((serverError as any)?.data?.message);
-    } else if (isUploadError) {
-      toast(
-        `Failed to upload image - ${(uploadError as any).data.error.message}`
-      );
-    } else if (isUpdateError) {
-      toast.error((updateError as any).data.error.message);
+      toast.error((error as any).data.message);
+      console.log(error);
     }
-  }, [
-    isError,
-    isUpdateError,
-    isUploadError,
-    serverError,
-    updateError,
-    uploadError,
-  ]);
-
+  }, [error, isError]);
   return (
     <>
-      <BtnAdd title="Create Slot" onClick={showModal} />
+      <BtnAdd title="Create Slot" onClick={() => setIsModalOpen(true)} />
       <Modal
         title={isUpdateMode ? "Edit Service" : "Create Slot"}
         open={isModalOpen}
-        onOk={handleOk}
-        onCancel={handleCancel}
+        onOk={() => setIsModalOpen(false)}
+        onCancel={() => setIsModalOpen(false)}
         footer={null}
       >
         <form
-          onSubmit={handleSubmit(onSubmit)}
-          className="border-t border-slate-300 w-full pt-4 space-y-4"
+          onSubmit={handleSubmitToCreateSlot}
+          className="border-t border-slate-300 w-full pt-4 space-y-5"
         >
           <div>
-            <label className="modal-label">Name*</label>
-            <input
-              className="modal-input"
-              type="text"
-              {...register("name", { required: true })}
+            <label className="modal-label">Service*</label>
+            <Select
+              showSearch
+              placeholder="Select a Service"
+              optionFilterProp="label"
+              onChange={(value) => setServiceId(value)}
+              value={serviceId}
+              loading={isLoadingServices}
+              className="w-full bg-slate-100"
+              options={services?.data?.map((service: IService) => ({
+                label: service.name,
+                value: service._id,
+              }))}
+            />
+          </div>
+          <div>
+            <label className="modal-label">Date*</label>
+            <DatePicker
+              className="w-full"
+              onChange={(date) => setDate(date)}
+              value={date ? dayjs(date) : null}
             />
           </div>
 
           <div className="grid grid-cols-2 gap-4">
             <aside>
-              <label className="modal-label">Duration*</label>
-              <input
-                className="modal-input"
-                type="number"
-                {...register("duration", { required: true })}
+              <label className="modal-label">Start Time*</label>
+              <TimePicker
+                format={"HH:mm"}
+                className="w-full"
+                onChange={(value) => setStartTime(value)}
+                value={startTime}
               />
             </aside>
             <aside>
-              <label className="modal-label">Price*</label>
-              <input
-                className="modal-input"
-                type="number"
-                {...register("price", { required: true })}
-              />
-            </aside>
-          </div>
-
-          <div className="grid grid-cols-12 gap-x-4">
-            <aside className="col-span-8">
-              <label className="modal-label">Description*</label>
-              <textarea
-                className="modal-input"
-                rows={4}
-                {...register("description", { required: true })}
-              />
-            </aside>
-            <aside className="col-span-4">
-              <label className="modal-label">Cover Image*</label>
-              <label htmlFor="file" className="labelFile modal-input">
-                <>
-                  <IoCloudUploadOutline size={52} />
-                  {coverImage && typeof coverImage === "object" ? (
-                    <p className="ml-2">{(coverImage as File).name}</p>
-                  ) : coverImage && typeof coverImage === "string" ? (
-                    <img src={coverImage} alt="" />
-                  ) : (
-                    <p className="text-sm">Click to Upload Image</p>
-                  )}
-                </>
-              </label>
-              <input
-                className="input"
-                id="file"
-                type="file"
-                name="coverImage"
-                onChange={onFileChange}
+              <label className="modal-label">End Time*</label>
+              <TimePicker
+                format={"HH:mm"}
+                className="w-full"
+                onChange={(value) => setEndTime(value)}
+                value={endTime}
               />
             </aside>
           </div>
 
           <div className="flex justify-end items-center gap-4">
-            <Button htmlType="submit" type="default" onClick={handleCancel}>
+            <Button
+              htmlType="button"
+              type="default"
+              onClick={() => setIsModalOpen(false)}
+            >
               Cancel
             </Button>
-            <Button
-              htmlType="submit"
-              type="primary"
-              loading={isLoading || isUploading || isUpdateLoading}
-            >
+            <Button htmlType="submit" type="primary" loading={isLoading}>
               Submit
             </Button>
           </div>
@@ -248,5 +162,4 @@ const SlotMutationModal: React.FC = () => {
     </>
   );
 };
-
 export default SlotMutationModal;
