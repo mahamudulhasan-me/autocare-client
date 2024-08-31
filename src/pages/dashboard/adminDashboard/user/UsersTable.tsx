@@ -2,16 +2,15 @@
 import type { TableColumnsType, TableProps } from "antd";
 import { Popconfirm, Table, Tag, Tooltip } from "antd";
 import React, { useEffect } from "react";
-import { FaRegTrashAlt } from "react-icons/fa";
-import { FiEdit } from "react-icons/fi";
+import { LiaToggleOffSolid, LiaToggleOnSolid } from "react-icons/lia";
 import { toast } from "sonner";
-import { useDeleteServiceMutation } from "../../../../redux/features/service/serviceApi";
-import { enableUpdateMode } from "../../../../redux/features/update/updateServiceSlice";
-import { useGetAllUsersQuery } from "../../../../redux/features/users/usesApi";
-import { useAppDispatch } from "../../../../redux/hooks";
-import { IService } from "../../../../types";
+import {
+  useGetAllUsersQuery,
+  useUpdateUserMutation,
+} from "../../../../redux/features/users/usesApi";
+import { IUser } from "../../../../types";
 
-const onChange: TableProps<IService>["onChange"] = (
+const onChange: TableProps<IUser>["onChange"] = (
   pagination,
   filters,
   sorter,
@@ -22,10 +21,19 @@ const onChange: TableProps<IService>["onChange"] = (
 
 const UsersTable: React.FC = () => {
   const { data: users, isLoading, isFetching } = useGetAllUsersQuery({});
-  const dispatch = useAppDispatch();
-  const [deleteService, { isError, isSuccess, error }] =
-    useDeleteServiceMutation();
-  const columns: TableColumnsType<IService> = [
+  const [updateUser, { isSuccess, error, isError }] = useUpdateUserMutation();
+
+  const handleSwapUserRole = async (id: string, role: IUser["role"]) => {
+    await updateUser({
+      id,
+      data: {
+        role: role === "admin" ? "user" : "admin",
+      },
+    });
+    console.log({ id, role });
+  };
+
+  const columns: TableColumnsType<IUser> = [
     {
       title: "Name",
       dataIndex: "name",
@@ -42,7 +50,12 @@ const UsersTable: React.FC = () => {
     {
       title: "Role",
       dataIndex: "role",
-      render: (role) => <Tag color="geekblue">{role.toUpperCase()}</Tag>,
+      render: (role) =>
+        role === "admin" ? (
+          <Tag color="orange">ADMIN</Tag>
+        ) : (
+          <Tag color="blue">USER</Tag>
+        ),
     },
     {
       title: "Address",
@@ -51,37 +64,38 @@ const UsersTable: React.FC = () => {
     {
       title: "Action",
       dataIndex: "action",
-      render: (_text, record) => (
-        <div className="text-lg flex gap-3">
-          <Tooltip title="Edit" color="#0f172a">
-            <FiEdit
-              className="text-slate-900 cursor-pointer"
-              onClick={() =>
-                dispatch(enableUpdateMode({ updateMode: true, data: record }))
-              }
-            />
-          </Tooltip>
-          <Popconfirm
-            title="Delete the service"
-            description="Are you sure to delete this service?"
-            okText="Yes"
-            cancelText="No"
-            onConfirm={() => deleteService(record?._id as string)}
-          >
-            <Tooltip title="Delete" color="#ee3131">
-              <FaRegTrashAlt className="text-rose-600 cursor-pointer" />
+      render: (_text, { _id, role }) => (
+        <Popconfirm
+          title={role === "admin" ? "Make User" : "Make Admin"}
+          description={
+            role === "admin"
+              ? "Are you sure to make user"
+              : "Are you sure to make admin"
+          }
+          okText="Yes"
+          cancelText="No"
+          onConfirm={() => handleSwapUserRole(_id, role)}
+        >
+          {role === "admin" ? (
+            <Tooltip title="Make User" color="blue">
+              <LiaToggleOnSolid className="text-rose-600 cursor-pointer text-3xl" />
             </Tooltip>
-          </Popconfirm>
-        </div>
+          ) : (
+            <Tooltip title="Make Admin" color="orange">
+              <LiaToggleOffSolid className="text-rose-600 cursor-pointer text-3xl" />
+            </Tooltip>
+          )}
+        </Popconfirm>
       ),
     },
   ];
 
   useEffect(() => {
+    if (isError) {
+      toast.error((error as any)?.data.message);
+    }
     if (isSuccess) {
-      toast.success("Service deleted successfully");
-    } else if (isError) {
-      toast.error((error as any)?.data?.message);
+      toast.success("User updated successfully");
     }
   }, [error, isError, isSuccess]);
   return (

@@ -9,7 +9,15 @@ const usersApiSlice = baseApiSlice.injectEndpoints({
       }),
       providesTags: ["Users"],
     }),
+    updateUser: builder.mutation({
+      query: ({ id, data }) => ({
+        url: `/users/${id}`,
+        method: "PUT",
+        body: data,
+      }),
+      invalidatesTags: ["Users"],
+    }),
   }),
 });
 
-export const { useGetAllUsersQuery } = usersApiSlice;
+export const { useGetAllUsersQuery, useUpdateUserMutation } = usersApiSlice;

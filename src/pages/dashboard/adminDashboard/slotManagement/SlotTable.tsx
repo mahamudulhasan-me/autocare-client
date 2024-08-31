@@ -36,7 +36,6 @@ const SlotTable: React.FC = () => {
         status: record.status !== "cancelled" ? "cancelled" : "available",
       },
     });
-    console.log(record);
   };
 
   useEffect(() => {
@@ -100,8 +99,16 @@ const SlotTable: React.FC = () => {
       render: (_text, record) => (
         <div className="text-2xl flex gap-3">
           <Popconfirm
-            title="Cancel the service"
-            description="Are you sure to cancel this service?"
+            title={
+              record?.status === "available"
+                ? "Cancel the service"
+                : "Make Available"
+            }
+            description={
+              record?.status === "available"
+                ? "Are you sure to cancel this service?"
+                : "Are you sure to available this service?"
+            }
             okText="Yes"
             cancelText="No"
             onConfirm={() => handleUpdateStatus(record)}
