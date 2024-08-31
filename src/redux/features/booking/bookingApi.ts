@@ -9,7 +9,15 @@ const bookingApiSlice = baseApiSlice.injectEndpoints({
       }),
       providesTags: ["Bookings"],
     }),
+    getBookingByUser: builder.query({
+      query: () => ({
+        url: `/bookings/my-bookings`,
+        method: "GET",
+      }),
+      providesTags: ["BookingByUser"],
+    }),
   }),
 });
 
-export const { useGetAllBookingsQuery } = bookingApiSlice;
+export const { useGetAllBookingsQuery, useGetBookingByUserQuery } =
+  bookingApiSlice;

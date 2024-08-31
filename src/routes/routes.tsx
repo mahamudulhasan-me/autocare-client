@@ -5,8 +5,9 @@ import Login from "../pages/authentication/Login";
 import AdminDashboard from "../pages/dashboard/adminDashboard/AdminDashboard";
 import AdminServices from "../pages/dashboard/adminDashboard/serviceManagement/AdminServices";
 import AdminSlots from "../pages/dashboard/adminDashboard/slotManagement/AdminSlots";
-import AdminUserManagement from "../pages/dashboard/adminDashboard/user/UserManagement";
 import UserBooking from "../pages/dashboard/adminDashboard/user/BookingAllUsers";
+import AdminUserManagement from "../pages/dashboard/adminDashboard/user/UserManagement";
+import BookedSlot from "../pages/dashboard/userDashboard/bookedSlot/BookedSlot";
 import HomePage from "../pages/home";
 
 const router = createBrowserRouter([
@@ -51,6 +52,10 @@ const router = createBrowserRouter([
       {
         path: "/dashboard/user",
         element: <AdminDashboard />,
+      },
+      {
+        path: "/dashboard/user/booked-slots",
+        element: <BookedSlot />,
       },
     ],
   },

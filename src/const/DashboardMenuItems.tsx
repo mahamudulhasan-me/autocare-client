@@ -53,6 +53,6 @@ export const USER_MENU_ITEMS = [
     key: "3",
     icon: <FaCheckToSlot />,
     label: "Booked Slots",
-    url: "/dashboard/user/slots",
+    url: "/dashboard/user/booked-slots",
   },
 ];

@@ -8,4 +8,7 @@ export interface ISlot {
   endTime: string;
   isBooked: boolean;
   status: "cancelled" | "booked" | "available";
+  createdAt?: string; // Alternatively, use Date if you parse the date strings
+  updatedAt?: string; // Alternatively, use Date if you parse the date strings
+  __v?: number;
 }
