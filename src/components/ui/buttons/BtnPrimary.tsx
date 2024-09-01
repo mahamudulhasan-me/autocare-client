@@ -1,8 +1,17 @@
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
-const BtnPrimary = ({ title }: { title: string }) => {
+const BtnPrimary = ({
+  title,
+  onClick,
+}: {
+  title: string;
+  onClick: () => void;
+}) => {
   return (
     <>
-      <button className=" text-white  rounded-md flex items-stretch gap-1 group">
+      <button
+        onClick={onClick}
+        className=" text-white  rounded-md flex items-stretch gap-1 group"
+      >
         <span className="bg-primary rounded-l-md px-5 py-2.5 font-semibold group-hover:bg-opacity-90 transition-opacity uppercase">
           {title}
         </span>

@@ -2,6 +2,13 @@ import baseApiSlice from "../../baseApi/baseApiSlice";
 
 const usersApiSlice = baseApiSlice.injectEndpoints({
   endpoints: (builder) => ({
+    getUser: builder.query({
+      query: (id) => ({
+        url: `/users/${id}`,
+        method: "GET",
+      }),
+      providesTags: ["Users"],
+    }),
     getAllUsers: builder.query({
       query: () => ({
         url: "/users",
@@ -20,4 +27,5 @@ const usersApiSlice = baseApiSlice.injectEndpoints({
   }),
 });
 
-export const { useGetAllUsersQuery, useUpdateUserMutation } = usersApiSlice;
+export const { useGetAllUsersQuery, useUpdateUserMutation, useGetUserQuery } =
+  usersApiSlice;

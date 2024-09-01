@@ -40,6 +40,13 @@ export const ADMIN_MENU_ITEMS = [
       },
     ],
   },
+
+  {
+    key: "8",
+    icon: <FaUsersCog />,
+    label: "Profile",
+    url: "/dashboard/user/profile",
+  },
 ];
 
 export const USER_MENU_ITEMS = [
@@ -54,5 +61,11 @@ export const USER_MENU_ITEMS = [
     icon: <FaCheckToSlot />,
     label: "Booked Slots",
     url: "/dashboard/user/booked-slots",
+  },
+  {
+    key: "7",
+    icon: <FaUsersCog />,
+    label: "Profile",
+    url: "/dashboard/user/profile",
   },
 ];
