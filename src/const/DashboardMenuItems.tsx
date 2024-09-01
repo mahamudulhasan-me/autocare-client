@@ -2,6 +2,7 @@ import { AiOutlineDashboard } from "react-icons/ai";
 import { FaUsersCog } from "react-icons/fa";
 import { FaCheckToSlot } from "react-icons/fa6";
 import { GrServices } from "react-icons/gr";
+import { IoHomeOutline } from "react-icons/io5";
 
 export const ADMIN_MENU_ITEMS = [
   {
@@ -47,6 +48,12 @@ export const ADMIN_MENU_ITEMS = [
     label: "Profile",
     url: "/dashboard/user/profile",
   },
+  {
+    key: "7",
+    icon: <IoHomeOutline />,
+    label: "Home",
+    url: "/",
+  },
 ];
 
 export const USER_MENU_ITEMS = [
@@ -61,6 +68,28 @@ export const USER_MENU_ITEMS = [
     icon: <FaCheckToSlot />,
     label: "Booked Slots",
     url: "/dashboard/user/booked-slots",
+  },
+
+  {
+    key: "5",
+    icon: <FaUsersCog />,
+    label: "Profile",
+    url: "/dashboard/user/profile",
+  },
+  {
+    key: "4",
+    icon: <AiOutlineDashboard />,
+    label: "Home",
+    url: "/",
+  },
+];
+
+export const COMMON_MENU_ITEMS = [
+  {
+    key: "1",
+    icon: <AiOutlineDashboard />,
+    label: "Home",
+    url: "/",
   },
   {
     key: "7",

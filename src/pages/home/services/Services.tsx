@@ -5,9 +5,14 @@ import {
   CarouselItem,
   CarouselNavigation,
 } from "../../../components/core/carousel";
+import ServiceCardLoader from "../../../components/ui/loaders/ServiceCardLoader";
+import { useGetAllServicesQuery } from "../../../redux/features/service/serviceApi";
+import { IService } from "../../../types";
 import ServiceCard from "./ServiceCard";
 
 export default function Services() {
+  const { data: services, isLoading, isFetching } = useGetAllServicesQuery({});
+
   return (
     <div className="py-20">
       <SectionHead
@@ -17,25 +22,18 @@ export default function Services() {
       <div className="relative container mx-auto px-[4%] my-10 ">
         <Carousel>
           <CarouselContent className="space-x-5">
-            <CarouselItem className="basis-1/4 overflow-visible mb-24">
-              <ServiceCard />
-            </CarouselItem>
-            <CarouselItem className="basis-1/4 overflow-visible mb-24">
-              <ServiceCard />
-            </CarouselItem>
-            <CarouselItem className="basis-1/4 overflow-visible mb-24">
-              <ServiceCard />
-            </CarouselItem>
-            <CarouselItem className="basis-1/4 overflow-visible mb-24">
-              <ServiceCard />
-            </CarouselItem>
-
-            <CarouselItem className="basis-1/4 overflow-visible mb-24">
-              <ServiceCard />
-            </CarouselItem>
-            <CarouselItem className="basis-1/4 overflow-visible mb-24">
-              <ServiceCard />
-            </CarouselItem>
+            {isLoading || isFetching
+              ? Array.from({ length: 4 }).map((_, i) => (
+                  <ServiceCardLoader key={i} />
+                ))
+              : services?.data?.map((service: IService) => (
+                  <CarouselItem
+                    key={service._id}
+                    className="basis-1/4 overflow-visible mb-24"
+                  >
+                    <ServiceCard service={service} />
+                  </CarouselItem>
+                ))}
           </CarouselContent>
           <CarouselNavigation
             className="absolute -bottom-14 left-auto top-auto w-full justify-end gap-2"
