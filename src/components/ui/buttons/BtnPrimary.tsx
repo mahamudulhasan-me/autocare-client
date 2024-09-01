@@ -4,7 +4,7 @@ const BtnPrimary = ({
   onClick,
 }: {
   title: string;
-  onClick: () => void;
+  onClick?: () => void;
 }) => {
   return (
     <>

@@ -4,7 +4,7 @@ import TeamMember2 from "./TeamMember2";
 import TeamMember3 from "./TeamMember3";
 const Team = () => {
   return (
-    <div className="container mx-auto px-[10%] my-20">
+    <div className="container mx-auto px-[10%] mb-28">
       <div className="mb-32">
         <SectionHead
           title="Meet Our Team"

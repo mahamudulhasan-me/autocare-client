@@ -1,5 +1,7 @@
 import Banner from "./banner/Banner";
+import Blog from "./blog/Blogs";
 import CarPolish from "./carPolish/CarPolish";
+import Client from "./client/Client";
 import KeyFeatures from "./keyFeatures/KeyFeatures";
 
 import Services from "./services/Services";
@@ -13,8 +15,10 @@ const HomePage = () => {
       <KeyFeatures />
       <CarPolish />
       <Services />
-      <Testimonials />
       <Team />
+      <Testimonials />
+      <Blog />
+      <Client />
     </div>
   );
 };

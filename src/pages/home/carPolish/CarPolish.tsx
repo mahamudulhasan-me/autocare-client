@@ -1,8 +1,11 @@
+import { FaQuoteLeft } from "react-icons/fa";
 import { GrUserWorker } from "react-icons/gr";
+import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import { RiHomeOfficeLine } from "react-icons/ri";
 import { VscWorkspaceTrusted } from "react-icons/vsc";
-import sectionDiv from "../../../assets/images/bg-img.png";
+import bg from "../../../assets/images/banner/bg1.png";
 import AnimatedBackground from "../../../components/core/animated-background";
+import { InView } from "../../../components/core/in-view";
 import BtnPrimary from "../../../components/ui/buttons/BtnPrimary";
 import CarPolishGallery from "./CarPolishGallery";
 import PolishCard from "./PolishCard";
@@ -25,7 +28,7 @@ const ITEMS = [
 ];
 const CarPolish = () => {
   return (
-    <div className="mt-20">
+    <div className="mt-20 mb-5">
       <div className="container mx-auto px-[4%] grid grid-cols-12 gap-x-5">
         <div className="col-span-7">
           <h1 className="uppercase text-slate-900 text-2xl font-semibold">
@@ -87,10 +90,42 @@ const CarPolish = () => {
           <CarPolishGallery />
         </div>
       </div>
+
       <div
-        style={{ backgroundImage: `url(${sectionDiv})` }}
-        className="w-full h-8 mt-10"
-      ></div>
+        style={{ backgroundImage: `url(${bg})` }}
+        className="w-full h-32 mt-20 bg-primary bg-cover bg-center bg-no-repeat bg-fixed"
+      >
+        <InView
+          variants={{
+            hidden: {
+              opacity: 0,
+              scale: 1.5,
+            },
+            visible: {
+              opacity: 1,
+              scale: 1,
+            },
+          }}
+          transition={{ duration: 0.3, ease: "easeInOut" }}
+          viewOptions={{ margin: "0px 0px -350px 0px" }}
+        >
+          <div className="container mx-auto px-[5%] flex justify-between items-center h-full py-10">
+            <FaQuoteLeft className="text-4xl text-white" />
+            <h1 className="text-slate-100 text-2xl font-semibold">
+              “Take care of your car in the garage, and the car will take care
+              of you on the road.”
+            </h1>
+            <button className=" text-white  rounded-md flex items-stretch gap-1 group">
+              <span className="bg-slate-900 rounded-l-md px-5 py-2.5 font-semibold group-hover:bg-opacity-90 transition-opacity uppercase">
+                Get Quote
+              </span>
+              <span className=" bg-slate-900 px-2 py-2 flex justify-center items-center text-2xl rounded-r-md hover:bg-opacity-90 transition-opacity ">
+                <MdOutlineKeyboardArrowRight />
+              </span>
+            </button>
+          </div>
+        </InView>
+      </div>
     </div>
   );
 };
