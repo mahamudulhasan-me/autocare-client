@@ -10,6 +10,7 @@ import AdminUserManagement from "../pages/dashboard/adminDashboard/user/UserMana
 import UserProfile from "../pages/dashboard/profile/UserProfile";
 import BookedSlot from "../pages/dashboard/userDashboard/bookedSlot/BookedSlot";
 import HomePage from "../pages/home";
+import ServicePage from "../pages/services";
 
 const router = createBrowserRouter([
   {
@@ -19,6 +20,10 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <HomePage />,
+      },
+      {
+        path: "/services",
+        element: <ServicePage />,
       },
       {
         path: "/login",

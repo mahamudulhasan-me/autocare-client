@@ -22,7 +22,6 @@ const BookedSlot = () => {
       />
       <div className="w-full h-full bg-white title-shadow py-2 px-4 rounded-md mb-4 flex justify-between items-center">
         <h1 className="text-xl font-semibold">Booking History</h1>
-        <div></div>
       </div>
       <BookedSlotOverview />
     </div>

@@ -6,6 +6,7 @@
 
 body {
   font-family: "Montserrat", sans-serif;
+  overflow-x: hidden;
 }
 
 .bg-gradient-header {
@@ -14,11 +15,12 @@ body {
 .bg-gradient-testimonial {
   background: linear-gradient(to right, #0f172a 50%, #f1f5f9 50%);
 }
+
 .header-shape {
   transform: rotate(20deg);
-
   right: 0;
 }
+
 .stoke-number {
   margin: 0;
   font-size: 60px;
@@ -49,6 +51,7 @@ body {
   @apply shadow-[0px_2px_3px_-1px_rgba(0,0,0,0.1),0px_1px_0px_0px_rgba(25,28,33,0.02),0px_0px_0px_1px_rgba(25,28,33,0.08)];
 }
 /* ------------------------------------- */
+
 /* css glass effect  */
 .glassmorphism {
   background: rgba(255, 255, 255, 0.25);
@@ -105,6 +108,13 @@ border: 1px solid rgba(255, 255, 255, 0.3); */
   background-color: #ee3131 !important;
   border-color: #ee3131 !important;
   color: #ffff;
+}
+.custom-breadcrumb .ant-breadcrumb-separator {
+  color: #ffffff; /* Change this to your desired separator color */
+}
+
+.custom-breadcrumb-item {
+  color: #ffffff; /* Custom color for breadcrumb items */
 }
 
 /* .ant-select-selector:hover {

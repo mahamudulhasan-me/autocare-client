@@ -1,11 +1,11 @@
 import { FcBusinessman } from "react-icons/fc";
+import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
   CarouselNavigation,
 } from "../../../components/core/carousel";
-import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 
 const TestimonialSliders = () => {
   return (

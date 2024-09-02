@@ -22,7 +22,7 @@ const onChange: TableProps<IService>["onChange"] = (
 
 const BookingsTable: React.FC = () => {
   const { data: bookings, isLoading, isFetching } = useGetAllBookingsQuery({});
-  console.log(bookings);
+
   const dispatch = useAppDispatch();
   const [deleteService, { isError, isSuccess, error }] =
     useDeleteServiceMutation();

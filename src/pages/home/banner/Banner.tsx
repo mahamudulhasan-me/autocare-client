@@ -127,7 +127,7 @@ export default function Banner() {
         </CarouselContent>
         <CarouselNavigation
           className="absolute bottom-2 left-auto top-auto w-full justify-end gap-2"
-          classNameButton="bg-zinc-800 *:stroke-zinc-50 dark:bg-zinc-200 dark:*:stroke-zinc-800"
+          classNameButton="bg-zinc-800 *:stroke-primary dark:bg-primary dark:*:stroke-zinc-primary"
           alwaysShow
         />
         <CarouselIndicator className="absolute bottom-5" />
