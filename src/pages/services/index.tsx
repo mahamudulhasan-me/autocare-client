@@ -1,10 +1,15 @@
 import { Breadcrumb } from "antd";
+import Search from "antd/es/input/Search";
 import { IoHomeOutline } from "react-icons/io5";
 import coverImage from "../../assets/images/banner/slide4.jpg";
-import AnimatedBackground from "../../components/core/animated-background";
 import { TextEffect } from "../../components/core/text-effect";
-import { carWashingServiceCategories } from "../../const/carWashingServiceCategories";
+import MyCheckbox from "../../components/ui/checkbox/MyCheckbox";
+import { useGetAllServicesQuery } from "../../redux/features/service/serviceApi";
+import { IService } from "../../types";
+import ServiceCard from "../home/services/ServiceCard";
+import ServiceSidebar from "./Service.Sidebar";
 const ServicePage = () => {
+  const { data: services } = useGetAllServicesQuery({});
   return (
     <div>
       <div
@@ -35,7 +40,7 @@ const ServicePage = () => {
         </div>
       </div>
       <div>
-        <div className="shadow-[rgba(50,50,93,0.25)_0px_6px_12px_-2px,_rgba(0,0,0,0.3)_0px_3px_7px_-3px] container mx-auto px-[5%] py-6 text-xl">
+        <div className="shadow-[rgba(50,_50,_105,_0.15)_0px_2px_5px_0px,_rgba(0,_0,_0,_0.05)_0px_1px_1px_0px] container mx-auto px-[5%] py-6 text-xl">
           <Breadcrumb
             items={[
               {
@@ -49,32 +54,29 @@ const ServicePage = () => {
           />
         </div>
 
-        <div className="container mx-auto px-[5%] grid grid-cols-12 my-10">
-          <aside className="col-span-3">
-            <div className="flex flex-col w-full  rounded-md border border-slate-300 bg-white p-2">
-              <AnimatedBackground
-                defaultValue={carWashingServiceCategories[0].categoryName}
-                className="rounded-lg bg-slate-100 w-full h-10 divide-y"
-                transition={{
-                  type: "spring",
-                  bounce: 0.2,
-                  duration: 0.3,
-                }}
-              >
-                {carWashingServiceCategories.map((tab) => (
-                  <button
-                    key={tab.categoryId}
-                    data-id={tab.categoryName}
-                    type="button"
-                    className="inline-flex h-9 w-full items-center justify-start text-zinc-500 transition-colors duration-100 focus-visible:outline-2 data-[checked=true]:text-primary"
-                  >
-                    {tab.categoryName}
-                  </button>
-                ))}
-              </AnimatedBackground>
+        <div className="container mx-auto px-[5%] grid grid-cols-12 my-10 gap-x-12">
+          <aside className="col-span-3 space-y-10">
+            <ServiceSidebar />
+          </aside>
+          <aside className="col-span-9">
+            <div className="bg-slate-100 w-full flex items-center justify-between px-2 py-4 rounded-sm mb-10">
+              <Search
+                className="w-[30%]"
+                placeholder="input search text"
+                enterButton
+                size="large"
+              />
+              <div className="flex items-center gap-x-5">
+                <MyCheckbox title="Sort by Price" />
+                <MyCheckbox title="Sort by Duration" />
+              </div>
+            </div>
+            <div className="grid grid-cols-3 gap-4">
+              {services?.data?.map((service: IService) => (
+                <ServiceCard service={service} key={service._id} />
+              ))}
             </div>
           </aside>
-          <aside className="col-span-9">main</aside>
         </div>
       </div>
     </div>
