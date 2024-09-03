@@ -1,6 +1,7 @@
-import { Button, Skeleton, Tooltip } from "antd";
+import { Breadcrumb, Button, DatePicker, Skeleton, Tag, Tooltip } from "antd";
 import dayjs from "dayjs";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { IoHomeOutline } from "react-icons/io5";
 import { MdOutlineKeyboardArrowLeft } from "react-icons/md";
 import { Link, useParams } from "react-router-dom";
 import BtnPrimary from "../../components/ui/buttons/BtnPrimary";
@@ -17,6 +18,8 @@ type GroupedSlots = {
 
 const ServiceDetails = () => {
   const [selectedSlotId, setSelectedSlotId] = useState<string>("");
+  const [selectedDate, setSelectedDate] = useState<dayjs.Dayjs>(dayjs());
+  const [filteredSlots, setFilteredSlots] = useState<ISlot[]>([]);
   const { slugId } = useParams<{ slugId: string }>();
   const serviceId = slugId?.split("-").pop();
 
@@ -31,21 +34,35 @@ const ServiceDetails = () => {
   });
 
   // Group slots by date
-  let groupedSlots;
-  if (!isLoadingSlots) {
-    const groupedSlotsFn: GroupedSlots | undefined = slots?.data?.reduce(
-      (acc: GroupedSlots, slot: ISlot) => {
-        const date = slot.date?.split("T")[0]; // Extract date part from ISO string
-        if (!acc[date]) {
-          acc[date] = [];
-        }
-        acc[date].push(slot);
-        return acc;
-      },
-      {}
-    );
-    groupedSlots = groupedSlotsFn;
-  }
+  //   let groupedSlots;
+  //   if (!isLoadingSlots) {
+  //     const groupedSlotsFn: GroupedSlots | undefined = slots?.data?.reduce(
+  //       (acc: GroupedSlots, slot: ISlot) => {
+  //         const date = slot.date?.split("T")[0]; // Extract date part from ISO string
+  //         if (!acc[date]) {
+  //           acc[date] = [];
+  //         }
+  //         acc[date].push(slot);
+  //         return acc;
+  //       },
+  //       {}
+  //     );
+  //     groupedSlots = groupedSlotsFn;
+  //   }
+  useEffect(() => {
+    if (!selectedDate || !slots?.data) return;
+
+    // Format selectedDate to match the format of the date in slots
+    const formattedSelectedDate = dayjs(selectedDate).format("YYYY-MM-DD");
+
+    // Filter slots based on the formatted selected date
+    const filterSlotsByDate = slots.data.filter((slot: ISlot) => {
+      const date = slot.date.split("T")[0]; // Extract date part from ISO string
+      return date === formattedSelectedDate;
+    });
+
+    setFilteredSlots(filterSlotsByDate);
+  }, [selectedDate, slots]);
 
   const handleSelectedSlot = (slotId: string) => {
     setSelectedSlotId((prevSelectedSlotId) =>
@@ -60,6 +77,18 @@ const ServiceDetails = () => {
         desc={description || "Lorem ipsum dolor sit amet"}
         coverImage={coverImage}
       />
+      <div className="shadow-[rgba(50,_50,_105,_0.15)_0px_2px_5px_0px,_rgba(0,_0,_0,_0.05)_0px_1px_1px_0px] container mx-auto px-[10%] py-6 text-xl">
+        <Breadcrumb
+          items={[
+            {
+              href: "/",
+              title: <IoHomeOutline />,
+            },
+            { href: "/services", title: "All Services" },
+            { title: name || "Service Details" },
+          ]}
+        />
+      </div>
       <div className="container mx-auto px-[10%] grid grid-cols-12 my-20">
         <aside className="col-span-5">
           {isLoadingService ? (
@@ -112,49 +141,55 @@ const ServiceDetails = () => {
             {isLoadingService ? <Skeleton.Button active /> : price}
           </h5>
 
-          <h5 className=" text-lg font-semibold mb-6 border-b border-slate-300 pb-2">
-            Select Slot
-          </h5>
+          <div className=" text-lg font-semibold mb-6 border-b border-slate-300 pb-2 flex  items-center gap-x-3">
+            <p>Select Slot</p>{" "}
+            <DatePicker
+              className="w-1/3"
+              defaultValue={selectedDate}
+              onChange={(date) => setSelectedDate(date)}
+            />
+          </div>
 
           {/* Render grouped slots */}
           {isLoadingSlots && <SlotLoader />}
-          {groupedSlots ? (
-            Object.keys(groupedSlots).map((date) => (
-              <div key={date} className="my-4">
+          {filteredSlots.length > 0 ? (
+            <>
+              <div className="my-4">
                 <h4 className="font-[500] mb-2">
-                  {dayjs(date).format("ddd, MMM D, YYYY")}
+                  {dayjs(selectedDate).format("ddd, MMM D, YYYY")}
                 </h4>
-                <div className="flex flex-wrap gap-2">
-                  {groupedSlots[date].map((slot: ISlot) => (
-                    <Tooltip
-                      key={slot._id} // Add key here to avoid React warning
-                      color={`${slot.isBooked ? "red" : "blue"}`}
-                      title={`${
-                        slot.isBooked
-                          ? "This Slot is Already Booked."
-                          : `From ${slot.startTime} To ${slot.endTime}`
-                      }`}
-                    >
-                      <Button
-                        onClick={() => handleSelectedSlot(slot._id as string)}
-                        disabled={slot.isBooked}
-                        type={
-                          slot._id === selectedSlotId ? "primary" : "default"
-                        }
-                      >
-                        {dayjs(slot.startTime, "HH:mm").format("hh:mm A")}
-                      </Button>
-                    </Tooltip>
-                  ))}
-                </div>
               </div>
-            ))
+              <div className="flex flex-wrap gap-2">
+                {filteredSlots.map((slot: ISlot) => (
+                  <Tooltip
+                    key={slot._id} // Add key here to avoid React warning
+                    color={`${slot.isBooked ? "red" : "blue"}`}
+                    title={`${
+                      slot.isBooked
+                        ? "This Slot is Already Booked."
+                        : `From ${slot.startTime} To ${slot.endTime}`
+                    }`}
+                  >
+                    <Button
+                      onClick={() => handleSelectedSlot(slot._id as string)}
+                      disabled={slot.isBooked}
+                      type={slot._id === selectedSlotId ? "primary" : "default"}
+                    >
+                      {dayjs(slot.startTime, "HH:mm").format("hh:mm A")}
+                    </Button>
+                  </Tooltip>
+                ))}
+              </div>
+            </>
           ) : (
             <p className="text-rose-600 font-[500]">
-              Currently, there are no available slots for this service!
+              Sorry, no slots are available for this service on{" "}
+              <Tag className="text-base" color="red">
+                {dayjs(selectedDate).format("ddd, MMM D, YYYY")}
+              </Tag>
             </p>
           )}
-          {groupedSlots && (
+          {filteredSlots.length > 0 && (
             <div className="mt-8">
               <BtnPrimary title="Book Now" />
             </div>
