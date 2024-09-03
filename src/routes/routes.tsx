@@ -11,6 +11,7 @@ import UserProfile from "../pages/dashboard/profile/UserProfile";
 import BookedSlot from "../pages/dashboard/userDashboard/bookedSlot/BookedSlot";
 import HomePage from "../pages/home";
 import ServicePage from "../pages/services";
+import ServiceDetails from "../pages/services/ServiceDetails";
 
 const router = createBrowserRouter([
   {
@@ -24,6 +25,10 @@ const router = createBrowserRouter([
       {
         path: "/services",
         element: <ServicePage />,
+      },
+      {
+        path: "/services/:slugId",
+        element: <ServiceDetails />,
       },
       {
         path: "/login",

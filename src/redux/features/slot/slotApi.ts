@@ -25,6 +25,13 @@ const slotApiSlice = baseApiSlice.injectEndpoints({
       }),
       invalidatesTags: ["Slots"],
     }),
+    getSlotsByService: builder.query({
+      query: ({ serviceId }) => ({
+        url: `/slots/service/${serviceId}`,
+        method: "GET",
+      }),
+      providesTags: ["Slots"],
+    }),
   }),
 });
 
@@ -32,4 +39,5 @@ export const {
   useGetAllSlotsQuery,
   useCreateSlotMutation,
   useUpdateSlotMutation,
+  useGetSlotsByServiceQuery,
 } = slotApiSlice;

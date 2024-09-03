@@ -2,6 +2,12 @@ import baseApiSlice from "../../baseApi/baseApiSlice";
 
 const serviceApiSlice = baseApiSlice.injectEndpoints({
   endpoints: (builder) => ({
+    getService: builder.query({
+      query: (id) => ({
+        url: `/services/${id}`,
+        method: "GET",
+      }),
+    }),
     getAllServices: builder.query({
       query: () => ({
         url: "/services",
@@ -36,6 +42,7 @@ const serviceApiSlice = baseApiSlice.injectEndpoints({
 });
 
 export const {
+  useGetServiceQuery,
   useGetAllServicesQuery,
   useCreateServiceMutation,
   useUpdateServiceMutation,
