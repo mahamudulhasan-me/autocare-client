@@ -8,7 +8,12 @@ body {
   font-family: "Montserrat", sans-serif;
   overflow-x: hidden;
 }
-
+h1,
+h2,
+h3,
+h4 {
+  @apply font-semibold;
+}
 .bg-gradient-header {
   background: linear-gradient(to right, #0f172a 50%, #ee3131 50%);
 }
@@ -125,3 +130,11 @@ border: 1px solid rgba(255, 255, 255, 0.3); */
 } */
 
 /* --------------------------------- */
+/* ServiceFAQs.css */
+.custom-collapse .ant-collapse-item-active .ant-collapse-header {
+  color: #ee3131; /* Change this color to your preferred active label color */
+  font-size: 1.2rem; /* Adjust the size as needed */
+}
+.ant-collapse-header {
+  font-size: 1rem; /* Adjust the size as needed */
+}

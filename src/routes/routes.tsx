@@ -11,7 +11,7 @@ import UserProfile from "../pages/dashboard/profile/UserProfile";
 import BookedSlot from "../pages/dashboard/userDashboard/bookedSlot/BookedSlot";
 import HomePage from "../pages/home";
 import ServicePage from "../pages/services";
-import ServiceDetails from "../pages/services/ServiceDetails";
+import ServiceDetails from "../pages/services/serviceDetails/ServiceDetails";
 
 const router = createBrowserRouter([
   {

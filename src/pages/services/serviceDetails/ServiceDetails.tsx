@@ -4,17 +4,17 @@ import { useEffect, useState } from "react";
 import { IoHomeOutline } from "react-icons/io5";
 import { MdOutlineKeyboardArrowLeft } from "react-icons/md";
 import { Link, useParams } from "react-router-dom";
-import BtnPrimary from "../../components/ui/buttons/BtnPrimary";
-import SlotLoader from "../../components/ui/loaders/SlotLoader";
-import PageBanner from "../../components/ui/pageBanner/PageBanner";
-import { useGetServiceQuery } from "../../redux/features/service/serviceApi";
-import { useGetSlotsByServiceQuery } from "../../redux/features/slot/slotApi";
-import { IService, ISlot } from "../../types";
+import BtnPrimary from "../../../components/ui/buttons/BtnPrimary";
+import SlotLoader from "../../../components/ui/loaders/SlotLoader";
+import PageBanner from "../../../components/ui/pageBanner/PageBanner";
+import { setBookingData } from "../../../redux/booking/bookingSlice";
+import { useGetServiceQuery } from "../../../redux/features/service/serviceApi";
+import { useGetSlotsByServiceQuery } from "../../../redux/features/slot/slotApi";
+import { useAppDispatch } from "../../../redux/hooks";
+import { IService, ISlot } from "../../../types";
+import ServiceFAQs from "./ServiceFAQs";
 
 // Define the type for grouped slots
-type GroupedSlots = {
-  [key: string]: ISlot[];
-};
 
 const ServiceDetails = () => {
   const [selectedSlotId, setSelectedSlotId] = useState<string>("");
@@ -22,6 +22,7 @@ const ServiceDetails = () => {
   const [filteredSlots, setFilteredSlots] = useState<ISlot[]>([]);
   const { slugId } = useParams<{ slugId: string }>();
   const serviceId = slugId?.split("-").pop();
+  const dispatch = useAppDispatch();
 
   const { data: service, isLoading: isLoadingService } =
     useGetServiceQuery(serviceId);
@@ -57,7 +58,7 @@ const ServiceDetails = () => {
 
     // Filter slots based on the formatted selected date
     const filterSlotsByDate = slots.data.filter((slot: ISlot) => {
-      const date = slot.date.split("T")[0]; // Extract date part from ISO string
+      const date = slot.date ? dayjs(slot.date).format("YYYY-MM-DD") : null; // Format the Date object to string
       return date === formattedSelectedDate;
     });
 
@@ -70,11 +71,22 @@ const ServiceDetails = () => {
     );
   };
 
+  useEffect(() => {
+    if (selectedSlotId) {
+      dispatch(
+        setBookingData({
+          service: service?.data,
+          slot: slots?.data?.find((slot: ISlot) => slot._id === selectedSlotId),
+        })
+      );
+    }
+  }, [dispatch, selectedSlotId, service, slots]);
+
   return (
     <div>
       <PageBanner
         title={name || "Service Details"}
-        desc={description || "Lorem ipsum dolor sit amet"}
+        desc={description || "Lorem ipsum dolor sit abet"}
         coverImage={coverImage}
       />
       <div className="shadow-[rgba(50,_50,_105,_0.15)_0px_2px_5px_0px,_rgba(0,_0,_0,_0.05)_0px_1px_1px_0px] container mx-auto px-[10%] py-6 text-xl">
@@ -89,7 +101,7 @@ const ServiceDetails = () => {
           ]}
         />
       </div>
-      <div className="container mx-auto px-[10%] grid grid-cols-12 my-20">
+      <div className="container mx-auto px-[10%] grid grid-cols-12 my-20 gap-y-20">
         <aside className="col-span-5">
           {isLoadingService ? (
             <div className="w-full">
@@ -195,6 +207,9 @@ const ServiceDetails = () => {
             </div>
           )}
         </aside>
+
+        <div className="h-[1px] w-full bg-slate-300 col-span-12"></div>
+        <ServiceFAQs />
       </div>
     </div>
   );

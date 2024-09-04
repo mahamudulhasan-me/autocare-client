@@ -10,6 +10,7 @@ import storage from "redux-persist/lib/storage";
 import baseApiSlice from "./baseApi/baseApiSlice";
 import { authReducer } from "./features/authentication/authSlice";
 
+import { bookingReducer } from "./booking/bookingSlice";
 import updateServiceSlice from "./features/update/updateServiceSlice";
 import { imagebbApiSlice } from "./imageBBApi/imageBBpi";
 
@@ -26,6 +27,7 @@ export const store = configureStore({
     [imagebbApiSlice.reducerPath]: imagebbApiSlice.reducer,
     auth: persistAuthReducer,
     updateService: updateServiceSlice,
+    booking: bookingReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
