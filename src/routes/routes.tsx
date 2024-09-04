@@ -2,6 +2,7 @@ import { createBrowserRouter } from "react-router-dom";
 import DashboardLayout from "../layout/DashboardLayout";
 import MainLayout from "../layout/MainLayout";
 import Login from "../pages/authentication/Login";
+import CheckoutPage from "../pages/checkout";
 import AdminDashboard from "../pages/dashboard/adminDashboard/AdminDashboard";
 import AdminServices from "../pages/dashboard/adminDashboard/serviceManagement/AdminServices";
 import AdminSlots from "../pages/dashboard/adminDashboard/slotManagement/AdminSlots";
@@ -31,8 +32,24 @@ const router = createBrowserRouter([
         element: <ServiceDetails />,
       },
       {
+        path: "/services/:slug/checkout",
+        element: <CheckoutPage />,
+      },
+      {
         path: "/login",
         element: <Login />,
+      },
+      {
+        path: "/payment/success",
+        element: <div>success</div>,
+      },
+      {
+        path: "/payment/failure",
+        element: <div>failure</div>,
+      },
+      {
+        path: "/payment/processing",
+        element: <div>processing</div>,
       },
     ],
   },

@@ -16,8 +16,20 @@ const bookingApiSlice = baseApiSlice.injectEndpoints({
       }),
       providesTags: ["BookingByUser"],
     }),
+
+    createBooking: builder.mutation({
+      query: (data) => ({
+        url: "/bookings",
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["Bookings"],
+    }),
   }),
 });
 
-export const { useGetAllBookingsQuery, useGetBookingByUserQuery } =
-  bookingApiSlice;
+export const {
+  useGetAllBookingsQuery,
+  useGetBookingByUserQuery,
+  useCreateBookingMutation,
+} = bookingApiSlice;

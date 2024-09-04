@@ -3,14 +3,14 @@ import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import { IoHomeOutline } from "react-icons/io5";
 import { MdOutlineKeyboardArrowLeft } from "react-icons/md";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import BtnPrimary from "../../../components/ui/buttons/BtnPrimary";
 import SlotLoader from "../../../components/ui/loaders/SlotLoader";
 import PageBanner from "../../../components/ui/pageBanner/PageBanner";
 import { setBookingData } from "../../../redux/booking/bookingSlice";
 import { useGetServiceQuery } from "../../../redux/features/service/serviceApi";
 import { useGetSlotsByServiceQuery } from "../../../redux/features/slot/slotApi";
-import { useAppDispatch } from "../../../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import { IService, ISlot } from "../../../types";
 import ServiceFAQs from "./ServiceFAQs";
 
@@ -23,6 +23,8 @@ const ServiceDetails = () => {
   const { slugId } = useParams<{ slugId: string }>();
   const serviceId = slugId?.split("-").pop();
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const { user } = useAppSelector((state) => state.auth);
 
   const { data: service, isLoading: isLoadingService } =
     useGetServiceQuery(serviceId);
@@ -33,6 +35,7 @@ const ServiceDetails = () => {
     skip: isLoadingService,
     serviceId: _id,
   });
+  const slug = name?.replace(" ", "-").toLowerCase();
 
   // Group slots by date
   //   let groupedSlots;
@@ -76,6 +79,7 @@ const ServiceDetails = () => {
       dispatch(
         setBookingData({
           service: service?.data,
+          customer: user,
           slot: slots?.data?.find((slot: ISlot) => slot._id === selectedSlotId),
         })
       );
@@ -203,7 +207,10 @@ const ServiceDetails = () => {
           )}
           {filteredSlots.length > 0 && (
             <div className="mt-8">
-              <BtnPrimary title="Book Now" />
+              <BtnPrimary
+                title="Book Now"
+                onClick={() => navigate(`/services/${slug}/checkout`)}
+              />
             </div>
           )}
         </aside>
