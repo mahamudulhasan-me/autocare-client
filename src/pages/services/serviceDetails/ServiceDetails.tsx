@@ -37,22 +37,6 @@ const ServiceDetails = () => {
   });
   const slug = name?.replace(" ", "-").toLowerCase();
 
-  // Group slots by date
-  //   let groupedSlots;
-  //   if (!isLoadingSlots) {
-  //     const groupedSlotsFn: GroupedSlots | undefined = slots?.data?.reduce(
-  //       (acc: GroupedSlots, slot: ISlot) => {
-  //         const date = slot.date?.split("T")[0]; // Extract date part from ISO string
-  //         if (!acc[date]) {
-  //           acc[date] = [];
-  //         }
-  //         acc[date].push(slot);
-  //         return acc;
-  //       },
-  //       {}
-  //     );
-  //     groupedSlots = groupedSlotsFn;
-  //   }
   useEffect(() => {
     if (!selectedDate || !slots?.data) return;
 
@@ -84,7 +68,7 @@ const ServiceDetails = () => {
         })
       );
     }
-  }, [dispatch, selectedSlotId, service, slots]);
+  }, [dispatch, selectedSlotId, service, slots, user]);
 
   return (
     <div>
