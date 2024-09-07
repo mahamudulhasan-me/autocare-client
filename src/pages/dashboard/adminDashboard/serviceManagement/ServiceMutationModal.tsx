@@ -1,10 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Button, Modal } from "antd";
+import { Button, Modal, Select } from "antd";
 import React, { ChangeEvent, useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { IoCloudUploadOutline } from "react-icons/io5";
 import { toast } from "sonner";
 import BtnAdd from "../../../../components/ui/buttons/BtnAdd";
+import { carWashingServiceCategories } from "../../../../const/carWashingServiceCategories";
 import {
   useCreateServiceMutation,
   useUpdateServiceMutation,
@@ -23,6 +24,7 @@ interface Inputs {
 
 const initialState = {
   name: "",
+  categoryId: 0,
   duration: 0,
   price: 0,
   description: "",
@@ -30,6 +32,8 @@ const initialState = {
 };
 
 const ServiceMutationModal: React.FC = () => {
+  const [categoryId, setCategoryId] = useState<number>();
+  console.log(categoryId);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [coverImage, setCoverImage] = useState<File | string | null>(null);
 
@@ -40,7 +44,7 @@ const ServiceMutationModal: React.FC = () => {
   const { isUpdateMode, updateService: updateServiceData } = useAppSelector(
     (state) => state.updateService
   );
-
+  console.log(updateServiceData);
   const [
     uploadImage,
     { isLoading: isUploading, isError: isUploadError, error: uploadError },
@@ -77,6 +81,7 @@ const ServiceMutationModal: React.FC = () => {
     if (isUpdateMode && updateServiceData) {
       setIsModalOpen(true);
       reset({ ...updateServiceData });
+      setCategoryId(updateServiceData?.categoryId);
       setCoverImage(updateServiceData?.coverImage || null); // Set existing image
     }
   }, [updateServiceData, reset, isUpdateMode]);
@@ -90,8 +95,10 @@ const ServiceMutationModal: React.FC = () => {
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     try {
       let coverImageUrl;
-
-      if (coverImage && typeof coverImage !== "string") {
+      if (!categoryId) {
+        toast.error("Category is required");
+        return;
+      } else if (coverImage && typeof coverImage !== "string") {
         const formData = new FormData();
         formData.append("image", coverImage);
         const imageUploadResponse = await uploadImage(formData).unwrap();
@@ -105,6 +112,7 @@ const ServiceMutationModal: React.FC = () => {
 
       const serviceData = {
         name: data.name,
+        categoryId: categoryId,
         duration: Number(data.duration),
         price: Number(data.price),
         description: data.description,
@@ -128,6 +136,7 @@ const ServiceMutationModal: React.FC = () => {
   useEffect(() => {
     if (isSuccess) {
       toast.success("Service created successfully");
+      setCategoryId(0);
       handleCancel(); // Close modal and reset state after success
     } else if (isUpdateSuccess) {
       toast.success("Service updated successfully");
@@ -176,6 +185,22 @@ const ServiceMutationModal: React.FC = () => {
               className="modal-input"
               type="text"
               {...register("name", { required: true })}
+            />
+          </div>
+          <div>
+            <label className="modal-label">Name*</label>
+            <Select
+              className="w-full border border-slate-300 rounded-md shadow-sm"
+              showSearch
+              placeholder="Select a category"
+              optionFilterProp="label"
+              value={categoryId}
+              onChange={(value) => setCategoryId(value)}
+              // onSearch={onSearch}
+              options={carWashingServiceCategories.map((category) => ({
+                label: category.categoryName,
+                value: category.categoryId,
+              }))}
             />
           </div>
 

@@ -1,5 +1,4 @@
 export const carWashingServiceCategories = [
-  { categoryId: 0, categoryName: "All Categories" },
   { categoryId: 1, categoryName: "Basic Exterior Wash" },
   { categoryId: 2, categoryName: "Full-Service Wash" },
   { categoryId: 3, categoryName: "Express Wash" },

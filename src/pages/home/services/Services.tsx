@@ -11,7 +11,7 @@ import { IService } from "../../../types";
 import ServiceCard from "./ServiceCard";
 
 export default function Services() {
-  const { data: services, isLoading, isFetching } = useGetAllServicesQuery({});
+  const { data: services, isLoading, isFetching } = useGetAllServicesQuery([]);
 
   return (
     <div className="py-20">

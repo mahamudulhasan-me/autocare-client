@@ -16,7 +16,7 @@ const SlotMutationModal: React.FC = () => {
   const [startTime, setStartTime] = useState<dayjs.Dayjs | null>(null);
   const [endTime, setEndTime] = useState<dayjs.Dayjs | null>(null);
   const { data: services, isLoading: isLoadingServices } =
-    useGetAllServicesQuery({});
+    useGetAllServicesQuery([]);
   const [createSlot, { isLoading, isSuccess, isError, error }] =
     useCreateSlotMutation();
   const { isUpdateMode, updateService: updateServiceData } = useAppSelector(
@@ -121,6 +121,7 @@ const SlotMutationModal: React.FC = () => {
               className="w-full"
               onChange={(date) => setDate(date)}
               value={date ? dayjs(date) : null}
+              minDate={dayjs(new Date())}
             />
           </div>
 

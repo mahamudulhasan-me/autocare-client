@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { IServiceQueryParams } from "../../../types/global.type";
 import baseApiSlice from "../../baseApi/baseApiSlice";
 
@@ -14,9 +15,10 @@ const serviceApiSlice = baseApiSlice.injectEndpoints({
         const params = new URLSearchParams();
         if (args) {
           args.forEach((item: IServiceQueryParams) =>
-            params.append(item.name, item.value)
+            params.append(item.name, item.value as any)
           );
         }
+
         return { url: "/services", method: "GET", params };
       },
       providesTags: ["Services"],

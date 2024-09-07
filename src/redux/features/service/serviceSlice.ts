@@ -1,29 +1,50 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { IServiceQueryParams } from "../../../types/global.type";
 
-const initialState = {
-  params: [] as IServiceQueryParams[],
+// Define the initial state with a type
+interface ServiceState {
+  params: IServiceQueryParams[];
+}
+
+const initialState: ServiceState = {
+  params: [],
 };
 
 const serviceSlice = createSlice({
   name: "service",
   initialState,
   reducers: {
-    setParams: (state, action) => {
-      const existingIndex = state.params.findIndex(
-        (param) => param.name === action.payload.name
-      );
+    // Action to set parameters
+    setParams: (
+      state,
+      action: PayloadAction<IServiceQueryParams & { method?: string }>
+    ) => {
+      const { method, name } = action.payload;
 
-      if (existingIndex !== -1) {
-        // If the same param exists, remove it
-        state.params.splice(existingIndex, 1);
+      // If method is "filter", reset the params array with the new value
+      if (method === "filter") {
+        state.params = [action.payload];
+        return;
+      }
+
+      // Find existing parameter by name
+      const existingParam = state.params.find((param) => param.name === name);
+
+      if (existingParam) {
+        // If parameter exists, remove it from params
+        state.params = state.params.filter((param) => param.name !== name);
       } else {
-        // Otherwise, add it
+        // Otherwise, add the new parameter
         state.params.push(action.payload);
       }
+    },
+
+    // Action to clear all parameters
+    clearParams: (state) => {
+      state.params = [];
     },
   },
 });
 
-export const { setParams } = serviceSlice.actions;
+export const { setParams, clearParams } = serviceSlice.actions;
 export const serviceReducer = serviceSlice.reducer;

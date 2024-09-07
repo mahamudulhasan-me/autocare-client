@@ -4,6 +4,9 @@ import { MdOutlineLocationOn } from "react-icons/md";
 import AnimatedBackground from "../../components/core/animated-background";
 import { carWashingServiceCategories } from "../../const/carWashingServiceCategories";
 
+import { setParams } from "../../redux/features/service/serviceSlice";
+import { useAppDispatch } from "../../redux/hooks";
+
 export const DownloadBrochures = (
   <div>
     <h1 className="text-2xl font-semibold capitalize">Get your brochures</h1>
@@ -53,38 +56,48 @@ export const ContactUs = (
   </div>
 );
 
-const ServiceCategories = (
-  <div className="hidden md:block">
-    <h1 className="text-2xl font-semibold capitalize">Categories</h1>
-    <div className="w-1/4 h-0.5 bg-primary mt-2 mb-6"></div>
-    <div className="flex flex-col w-full  rounded-sm  bg-white ">
-      <AnimatedBackground
-        defaultValue={carWashingServiceCategories[0].categoryName}
-        className=" bg-primary w-full h-10 rounded-sm"
-        transition={{
-          type: "spring",
-          bounce: 0.2,
-          duration: 0.3,
-        }}
-      >
-        {carWashingServiceCategories.map((tab) => (
-          <button
-            key={tab.categoryId}
-            data-id={tab.categoryName}
-            type="button"
-            className="inline-flex h-12 w-full items-center justify-start text-slate-950 transition-colors duration-100 focus-visible:outline-2 data-[checked=true]:text-white data-[checked=true]:font-semibold pt-2 pb-2 px-2  border-b"
-          >
-            {tab.categoryName}
-          </button>
-        ))}
-      </AnimatedBackground>
-    </div>
-  </div>
-);
 const ServiceSidebar = () => {
+  const dispatch = useAppDispatch();
+
   return (
     <div className="space-y-8  pt-10 md:pt-0">
-      {ServiceCategories}
+      <div className="hidden md:block">
+        <h1 className="text-2xl font-semibold capitalize">Categories</h1>
+        <div className="w-1/4 h-0.5 bg-primary mt-2 mb-6"></div>
+        <div className="flex flex-col w-full  rounded-sm  bg-white ">
+          <AnimatedBackground
+            onValueChange={(value) =>
+              dispatch(
+                setParams({
+                  method: "filter",
+                  name: "categoryId",
+                  value: value!,
+                })
+              )
+            }
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            defaultValue={carWashingServiceCategories[0].categoryId}
+            className=" bg-primary w-full h-10 rounded-sm"
+            transition={{
+              type: "spring",
+              bounce: 0.2,
+              duration: 0.3,
+            }}
+          >
+            {carWashingServiceCategories.map((tab) => (
+              <button
+                key={tab.categoryId}
+                data-id={tab.categoryId}
+                type="button"
+                className="inline-flex h-12 w-full items-center justify-start text-slate-950 transition-colors duration-100 focus-visible:outline-2 data-[checked=true]:text-white data-[checked=true]:font-semibold pt-2 pb-2 px-2  border-b"
+              >
+                {tab.categoryName}
+              </button>
+            ))}
+          </AnimatedBackground>
+        </div>
+      </div>
       {DownloadBrochures}
       {ContactUs}
     </div>

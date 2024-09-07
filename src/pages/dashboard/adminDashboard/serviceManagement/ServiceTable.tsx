@@ -23,7 +23,8 @@ const onChange: TableProps<IService>["onChange"] = (
 };
 
 const ServiceTable: React.FC = () => {
-  const { data: services, isLoading, isFetching } = useGetAllServicesQuery({});
+  const { data: services, isLoading, isFetching } = useGetAllServicesQuery([]);
+
   const dispatch = useAppDispatch();
   const [deleteService, { isError, isSuccess, error }] =
     useDeleteServiceMutation();

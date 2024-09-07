@@ -10,11 +10,7 @@ import { useGetAllTestimonialQuery } from "../../../redux/features/testimonial/t
 import { ITestimonial } from "../../../types/testimonial";
 
 const TestimonialSliders = () => {
-  const {
-    data: testimonials,
-    isSuccess,
-    isLoading,
-  } = useGetAllTestimonialQuery({});
+  const { data: testimonials } = useGetAllTestimonialQuery({});
   return (
     <>
       <h3 className="md:text-3xl text-2xl  font-semibold uppercase">
