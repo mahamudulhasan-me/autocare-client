@@ -1,8 +1,7 @@
-import { BsCloudRain } from "react-icons/bs";
+import { BsCloudRain, BsFuelPumpDiesel } from "react-icons/bs";
 import { MdOutlineLocalCarWash } from "react-icons/md";
 import AnimatedBackground from "../../../components/core/animated-background";
 import KeyFeatureCard from "./KeyFeatureCard";
-import { BsFuelPumpDiesel } from "react-icons/bs";
 export default function KeyFeatures() {
   const ITEMS = [
     {
@@ -28,7 +27,7 @@ export default function KeyFeatures() {
   ];
 
   return (
-    <div className="container mx-auto px-[4%] grid grid-cols-2 p-10 md:grid-cols-4 gap-x-8 my-20">
+    <div className="container mx-auto md:px-[4%] px-4 md:grid grid-cols-2 p-10 md:grid-cols-4 gap-x-8 my-20 space-y-10 md:space-y-0">
       <AnimatedBackground
         className="rounded-md bg-slate-800 z-10"
         transition={{

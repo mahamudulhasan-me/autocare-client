@@ -7,7 +7,7 @@ const TeamMember1 = () => {
       <div className="relative w-full h-80 group  border-b-4 border-primary">
         <div className="absolute h-96 w-1 bg-primary bottom-0 left-0"></div>
         <div className="absolute h-[15.1rem] w-1 bg-primary right-0 bottom-0"></div>
-        <div className="absolute w-full h-1 bg-primary top-0  skew-y-[22deg]"></div>
+        <div className="absolute w-full h-1 bg-primary top-0  md:skew-y-[22deg] skew-y-[24deg]"></div>
         <img
           src={team2}
           alt=""

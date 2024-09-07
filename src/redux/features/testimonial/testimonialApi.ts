@@ -10,7 +10,15 @@ const testimonialApiSlice = baseApiSlice.injectEndpoints({
       }),
       invalidatesTags: ["Testimonial"],
     }),
+    getAllTestimonial: builder.query({
+      query: () => ({
+        url: "/testimonials",
+        method: "GET",
+      }),
+      providesTags: ["Testimonial"],
+    }),
   }),
 });
 
-export const { useCreateTestimonialMutation } = testimonialApiSlice;
+export const { useCreateTestimonialMutation, useGetAllTestimonialQuery } =
+  testimonialApiSlice;

@@ -38,6 +38,14 @@ const router = createBrowserRouter([
         element: <CheckoutPage />,
       },
       {
+        path: "/contact",
+        element: <div>contact page will be coming soon!</div>,
+      },
+      {
+        path: "/about",
+        element: <div>About page will be coming soon!</div>,
+      },
+      {
         path: "/login",
         element: <Login />,
       },

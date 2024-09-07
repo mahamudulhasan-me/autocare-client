@@ -2,8 +2,8 @@ import { Breadcrumb, Button, DatePicker, Skeleton, Tag, Tooltip } from "antd";
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import { IoHomeOutline } from "react-icons/io5";
-import { MdOutlineKeyboardArrowLeft } from "react-icons/md";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import BtnBackToService from "../../../components/ui/buttons/BtnBackToService";
 import BtnPrimary from "../../../components/ui/buttons/BtnPrimary";
 import SlotLoader from "../../../components/ui/loaders/SlotLoader";
 import PageBanner from "../../../components/ui/pageBanner/PageBanner";
@@ -89,7 +89,7 @@ const ServiceDetails = () => {
           ]}
         />
       </div>
-      <div className="container mx-auto px-[10%] grid grid-cols-12 my-20 gap-y-20">
+      <div className="container mx-auto md:px-[10%] px-4 md:grid grid-cols-12 my-20 gap-y-20">
         <aside className="col-span-5">
           {isLoadingService ? (
             <div className="w-full">
@@ -99,7 +99,7 @@ const ServiceDetails = () => {
           ) : (
             <>
               <img src={coverImage} alt={name} />
-              <p className="mt-6">
+              <p className="mt-6 hidden md:block">
                 {description} Lorem ipsum, dolor sit amet consectetur
                 adipisicing elit. Excepturi quisquam debitis quia aperiam
                 doloribus nostrum perspiciatis vitae nisi, laudantium
@@ -108,19 +108,11 @@ const ServiceDetails = () => {
             </>
           )}
 
-          <Link
-            to={"/services"}
-            className=" text-white  rounded-md flex items-stretch gap-1 group mt-8"
-          >
-            <span className=" bg-primary px-2 py-2 flex justify-center items-center text-2xl rounded-l-md hover:bg-opacity-90 transition-opacity ">
-              <MdOutlineKeyboardArrowLeft />
-            </span>
-            <span className="bg-primary rounded-r-md px-5 py-2.5 font-semibold group-hover:bg-opacity-90 transition-opacity uppercase">
-              Back to Services
-            </span>
-          </Link>
+          <div className="hidden md:block">
+            <BtnBackToService />
+          </div>
         </aside>
-        <aside className="col-span-7 ml-10">
+        <aside className="col-span-7 md:ml-10 my-10 md:mt-0">
           <p className="text-primary text-sm font-semibold uppercase">
             Best Services We Provided
           </p>
@@ -197,6 +189,12 @@ const ServiceDetails = () => {
               />
             </div>
           )}
+          <p className="mt-6 block md:hidden border-t border-slate-300 pt-6">
+            {description} Lorem ipsum, dolor sit amet consectetur adipisicing
+            elit. Excepturi quisquam debitis quia aperiam doloribus nostrum
+            perspiciatis vitae nisi, laudantium temporibus!
+          </p>
+          <BtnBackToService />
         </aside>
 
         <div className="h-[1px] w-full bg-slate-300 col-span-12"></div>

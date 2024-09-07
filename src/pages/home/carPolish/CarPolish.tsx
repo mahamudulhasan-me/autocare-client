@@ -29,7 +29,7 @@ const ITEMS = [
 const CarPolish = () => {
   return (
     <div className="mt-20 mb-5">
-      <div className="container mx-auto px-[4%] grid grid-cols-12 gap-x-5">
+      <div className="container mx-auto md:px-[4%] px-4 md:grid grid-cols-12 gap-x-5">
         <div className="col-span-7">
           <h1 className="uppercase text-slate-900 text-2xl font-semibold">
             Car <span className="text-primary">polish</span>
@@ -48,7 +48,7 @@ const CarPolish = () => {
               popularized in the 1960s with the release of Learjet sheets
               containing..
             </p>
-            <div className="grid grid-cols-3 gap-x-8">
+            <div className="md:grid grid-cols-3 gap-x-8 space-y-6 md:space-y-0">
               <AnimatedBackground
                 className="rounded-md bg-slate-800  w-full"
                 transition={{
@@ -93,7 +93,7 @@ const CarPolish = () => {
 
       <div
         style={{ backgroundImage: `url(${bg})` }}
-        className="w-full h-32 mt-20 bg-primary bg-cover bg-center bg-no-repeat bg-fixed"
+        className="w-full md:h-32 mt-20 bg-primary bg-cover bg-center bg-no-repeat bg-fixed"
       >
         <InView
           variants={{
@@ -109,7 +109,7 @@ const CarPolish = () => {
           transition={{ duration: 0.3, ease: "easeInOut" }}
           viewOptions={{ margin: "0px 0px -350px 0px" }}
         >
-          <div className="container mx-auto px-[5%] flex justify-between items-center h-full py-10">
+          <div className="container mx-auto px-[5%] md:flex justify-between items-center h-full py-10 space-y-5 md:space-y-0">
             <FaQuoteLeft className="text-4xl text-white" />
             <h1 className="text-slate-100 text-2xl font-semibold">
               “Take care of your car in the garage, and the car will take care

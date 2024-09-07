@@ -27,14 +27,14 @@ const ServicePage = () => {
           />
         </div>
 
-        <div className="container mx-auto px-[5%] grid grid-cols-12 my-10 gap-x-12">
-          <aside className="col-span-3 space-y-10">
+        <div className="container mx-auto md:px-[4%] px-4 md:grid grid-cols-12 my-10 gap-x-12">
+          <aside className="hidden md:block col-span-3 space-y-10">
             <ServiceSidebar />
           </aside>
           <aside className="col-span-9">
-            <div className="bg-slate-100 w-full flex items-center justify-between px-2 py-4 rounded-sm mb-10">
+            <div className="bg-slate-100 w-full flex md:flex-wrap flex-col items-center justify-between px-2 py-4 rounded-sm mb-10 space-y-5 md:space-y-0">
               <Search
-                className="w-[30%]"
+                className="md:w-[30%]"
                 placeholder="input search text"
                 enterButton
                 size="large"
@@ -44,11 +44,12 @@ const ServicePage = () => {
                 <MyCheckbox title="Sort by Duration" />
               </div>
             </div>
-            <div className="grid grid-cols-3 gap-x-4 gap-y-24">
+            <div className="md:grid grid-cols-3 gap-x-4 gap-y-24 space-y-28 md:space-y-0 mb-28 md:mb-0">
               {services?.data?.map((service: IService) => (
                 <ServiceCard service={service} key={service._id} />
               ))}
             </div>
+            <ServiceSidebar />
           </aside>
         </div>
       </div>

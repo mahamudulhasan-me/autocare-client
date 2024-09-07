@@ -1,11 +1,20 @@
+import { Drawer } from "antd";
+import React, { useState } from "react";
+import { MdMenu } from "react-icons/md";
 import { NavLink } from "react-router-dom";
 import { useAppSelector } from "../../../redux/hooks";
-import BtnAccount from "../../ui/buttons/BtnAccount";
-import ResponsiveNav from "./ResponsiveNave";
 
-const Nav = () => {
+const ResponsiveNav: React.FC = () => {
+  const [open, setOpen] = useState(false);
   const { user, isAuthenticated } = useAppSelector((state) => state.auth);
 
+  const showDrawer = () => {
+    setOpen(true);
+  };
+
+  const onClose = () => {
+    setOpen(false);
+  };
   const navItems = [
     {
       id: 1,
@@ -40,38 +49,31 @@ const Nav = () => {
   ];
 
   return (
-    <nav className="bg-slate-900 w-full">
-      <div className="container mx-auto md:px-[4%] px-4 text-white font-semibold flex justify-between items-center">
-        <div className="hidden md:block">
-          {navItems.map((item, index) => (
+    <>
+      <MdMenu onClick={showDrawer} className="text-3xl text-primary" />
+
+      <Drawer placement="left" title="Auto Care" onClose={onClose} open={open}>
+        <div className="md:hidden flex flex-col">
+          {navItems.map((item) => (
             <NavLink
               to={item.path}
               key={item.id}
+              onClick={onClose}
               className={({ isActive }) =>
-                `h-full border-b-2 text-center inline-block transition-colors py-5 ${
+                `h-full border-b text-center inline-block transition-colors py-5 text-lg ${
                   isActive
                     ? "border-primary text-primary"
                     : "border-slate-900 hover:border-primary hover:text-primary"
                 } ${item.protected ? "hidden" : "block"}`
               }
             >
-              <span
-                className={`px-5 ${
-                  index !== navItems.length - 1
-                    ? "border-r border-slate-400"
-                    : ""
-                }`}
-              >
-                {item.title}
-              </span>
+              {item.title}
             </NavLink>
           ))}
         </div>
-        <ResponsiveNav />
-        <BtnAccount />
-      </div>
-    </nav>
+      </Drawer>
+    </>
   );
 };
 
-export default Nav;
+export default ResponsiveNav;

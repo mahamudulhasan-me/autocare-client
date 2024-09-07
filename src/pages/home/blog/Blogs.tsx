@@ -16,7 +16,7 @@ const Blog = () => {
             desc="There are many variations of passages of Lorem Ipsum typesetting industry has been the industry's standard dummy text ever since the been when an unknown printer."
           />
         </div>
-        <div className="grid grid-cols-3 gap-x-12 mt-10">
+        <div className="md:grid grid-cols-3 gap-x-12 mt-10 space-y-10 md:space-y-0">
           {carWashBlogs.map((blog: CarWashBlog, index) => (
             <BlogCard key={blog.id} blog={blog} data-id={`card-${index}`} />
           ))}

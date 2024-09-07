@@ -6,11 +6,18 @@ import {
   CarouselItem,
   CarouselNavigation,
 } from "../../../components/core/carousel";
+import { useGetAllTestimonialQuery } from "../../../redux/features/testimonial/testimonialApi";
+import { ITestimonial } from "../../../types/testimonial";
 
 const TestimonialSliders = () => {
+  const {
+    data: testimonials,
+    isSuccess,
+    isLoading,
+  } = useGetAllTestimonialQuery({});
   return (
     <>
-      <h3 className="text-3xl  font-semibold uppercase">
+      <h3 className="md:text-3xl text-2xl  font-semibold uppercase">
         WHAT CUSTOMERS <span className="text-primary">SAID</span>
       </h3>
       <p className="my-2">
@@ -19,63 +26,25 @@ const TestimonialSliders = () => {
       </p>
       <Carousel>
         <CarouselContent>
-          <CarouselItem className="border mt-8 border-slate-300 rounded-sm p-5 overflow-visible mb-20">
-            <div className="relative">
-              <p className="pb-6">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Dignissimos illo dolor quae vel, optio consequatur? Lorem ipsum
-                dolor sit amet consectetur adipisicing elit. Animi laborum
-                laudantium non minima rerum repudiandae!
-              </p>
-              <div className="flex items-end gap-1 absolute -bottom-[70px]">
-                <div className="bg-white border border-slate-300 size-20 flex justify-center items-center rounded-sm ">
-                  <FcBusinessman size={64} />
-                </div>
-                <div className="-space-y-1">
-                  <h6 className="font-semibold">Mahamudul Hasan</h6>
-                  <p>Developer</p>
-                </div>
-              </div>
-            </div>
-          </CarouselItem>
-          <CarouselItem className="border mt-8 border-slate-300 rounded-sm p-5 overflow-visible mb-20">
-            <div className="relative">
-              <p className="pb-6">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Dignissimos illo dolor quae vel, optio consequatur? Lorem ipsum
-                dolor sit amet consectetur adipisicing elit. Animi laborum
-                laudantium non minima rerum repudiandae!
-              </p>
-              <div className="flex items-end gap-1 absolute -bottom-[70px]">
-                <div className="bg-white border border-slate-300 size-20 flex justify-center items-center rounded-sm ">
-                  <FcBusinessman size={64} />
-                </div>
-                <div className="-space-y-1">
-                  <h6 className="font-semibold">Mahamudul Hasan</h6>
-                  <p>Developer</p>
+          {testimonials?.data?.map((item: ITestimonial) => (
+            <CarouselItem
+              key={item._id}
+              className="border mt-8 border-slate-300 rounded-sm p-5 overflow-visible mb-20"
+            >
+              <div className="relative">
+                <p className="pb-6">{item.description}</p>
+                <div className="flex items-end gap-1 absolute -bottom-[70px]">
+                  <div className="bg-white border border-slate-300 size-20 flex justify-center items-center rounded-sm ">
+                    <FcBusinessman size={64} />
+                  </div>
+                  <div className="-space-y-1">
+                    <h6 className="font-semibold">{item.user.name}</h6>
+                    <p>Developer</p>
+                  </div>
                 </div>
               </div>
-            </div>
-          </CarouselItem>
-          <CarouselItem className="border mt-8 border-slate-300 rounded-sm p-5 overflow-visible mb-20">
-            <div className="relative">
-              <p className="pb-6">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Dignissimos illo dolor quae vel, optio consequatur? Lorem ipsum
-                dolor sit amet consectetur adipisicing elit. Animi laborum
-                laudantium non minima rerum repudiandae!
-              </p>
-              <div className="flex items-end gap-1 absolute -bottom-[70px]">
-                <div className="bg-white border border-slate-300 size-20 flex justify-center items-center rounded-sm ">
-                  <FcBusinessman size={64} />
-                </div>
-                <div className="-space-y-1">
-                  <h6 className="font-semibold">Mahamudul Hasan</h6>
-                  <p>Developer</p>
-                </div>
-              </div>
-            </div>
-          </CarouselItem>
+            </CarouselItem>
+          ))}
         </CarouselContent>
         <div className="relative flex items-end justify-between w-full">
           <button className=" text-white  rounded-md flex items-stretch gap-0.5 group">

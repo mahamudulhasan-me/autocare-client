@@ -11,7 +11,7 @@ const Team = () => {
           desc="There are many variations of passages of Lorem Ipsum typesetting industry has been the industry's standard dummy text ever since the been when an unknown printer."
         />
       </div>
-      <div className="grid grid-cols-3 gap-x-20 ">
+      <div className="md:grid grid-cols-3 gap-x-20 ">
         {/* team - 1 */}
         <TeamMember1 />
         {/* team - 2 */}

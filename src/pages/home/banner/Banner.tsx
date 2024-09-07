@@ -20,20 +20,20 @@ export default function Banner() {
           <CarouselItem>
             <div
               style={{ backgroundImage: `url(${banner4})` }}
-              className="h-[calc(100vh-50px)] w-full bg-cover bg-center bg-no-repeat bg-slate-900/60 bg-blend-overlay flex items-center justify-center"
+              className="md:h-[calc(100vh-50px)] h-[80vh] w-full bg-cover bg-center bg-no-repeat bg-slate-900/60 bg-blend-overlay flex items-center justify-center"
             >
-              <div className="container mx-auto px-[4%]">
+              <div className="container mx-auto md:px-[4%] px-4">
                 <TextEffect
                   per="char"
                   preset="fade"
-                  className="text-7xl text-white font-semibold uppercase w-[50%] space-y-5"
+                  className="md:text-7xl text-4xl text-white font-semibold uppercase md:w-[50%] space-y-5"
                 >
                   Make Your car last longer
                 </TextEffect>
                 <TextEffect
                   per="word"
                   preset="slide"
-                  className="text-xl text-slate-50 mb-12 mt-8 w-[55%] space-y-1"
+                  className="text-xl text-slate-50 mb-12 mt-8 md:w-[55%] space-y-1"
                 >
                   There are many variations of passages of Lorem Ipsum
                   typesetting industry. Lorem Ipsum has been the industry's
@@ -56,20 +56,20 @@ export default function Banner() {
           <CarouselItem>
             <div
               style={{ backgroundImage: `url(${banner5})` }}
-              className="h-[calc(100vh-50px)] w-full bg-cover bg-center bg-no-repeat bg-slate-900/60 bg-blend-overlay flex items-center justify-center"
+              className="md:h-[calc(100vh-50px)] h-[80vh] w-full bg-cover bg-center bg-no-repeat bg-slate-900/60 bg-blend-overlay flex items-center justify-center"
             >
-              <div className="container mx-auto px-[4%] flex flex-col justify-end items-center mt-36">
+              <div className="container mx-auto md:px-[4%] px-4 flex flex-col justify-end items-center mt-36">
                 <TextEffect
                   per="char"
                   preset="slide"
-                  className="text-7xl text-white font-semibold uppercase"
+                  className="md:text-7xl text-4xl text-white font-semibold uppercase"
                 >
                   Give Your Car
                 </TextEffect>
                 <TextEffect
                   per="word"
                   preset="slide"
-                  className="text-xl text-slate-50 mb-12 mt-8 w-[40%] text-center"
+                  className="text-xl text-slate-50 mb-12 mt-8 md:w-[40%] text-center"
                 >
                   A Premium Revolution Slider Template for your Website
                   Highlights & Multi-Media Content.
@@ -91,20 +91,20 @@ export default function Banner() {
           <CarouselItem>
             <div
               style={{ backgroundImage: `url(${banner6})` }}
-              className="h-[calc(100vh-50px)] w-full bg-cover bg-center bg-no-repeat bg-slate-900/60 bg-blend-overlay flex items-center justify-center"
+              className="md:h-[calc(100vh-50px)] h-[80vh] w-full bg-cover bg-center bg-no-repeat bg-slate-900/60 bg-blend-overlay flex items-center justify-center"
             >
-              <div className="container mx-auto px-[4%] ">
+              <div className="container mx-auto md:px-[4%] px-4">
                 <TextEffect
                   per="char"
                   preset="fade"
-                  className="text-7xl text-white font-semibold uppercase w-[50%] space-y-1"
+                  className="md:text-7xl text-4xl text-white font-semibold uppercase md:w-[50%] space-y-1"
                 >
                   Make Your car last longer
                 </TextEffect>
                 <TextEffect
                   per="word"
                   preset="slide"
-                  className="text-xl text-slate-50 mb-12 mt-8 w-[60%] space-y-1"
+                  className="text-xl text-slate-50 mb-12 mt-8 md:w-[60%] space-y-1"
                 >
                   There are many variations of passages of Lorem Ipsum
                   typesetting industry. Lorem Ipsum has been the industry's

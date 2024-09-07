@@ -6,8 +6,8 @@ import { carWashingServiceCategories } from "../../const/carWashingServiceCatego
 
 const ServiceSidebar = () => {
   return (
-    <>
-      <div className="">
+    <div className="space-y-8 md:space-y-0 pt-10 md:pt-0">
+      <div className="hidden md:block">
         <h1 className="text-2xl font-semibold capitalize">Categories</h1>
         <div className="w-1/4 h-0.5 bg-primary mt-2 mb-6"></div>
         <div className="flex flex-col w-full  rounded-sm  bg-white ">
@@ -81,7 +81,7 @@ const ServiceSidebar = () => {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

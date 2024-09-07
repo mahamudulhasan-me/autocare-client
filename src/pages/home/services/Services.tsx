@@ -19,7 +19,7 @@ export default function Services() {
         title="Offering Quality Services"
         desc="There are many variations of passages of Lorem Ipsum typesetting industry has been the industry's standard dummy text ever since the been when an unknown printer."
       />
-      <div className="relative container mx-auto px-[4%] my-10 ">
+      <div className="relative container mx-auto md:px-[4%] px-4 my-10 ">
         <Carousel>
           <CarouselContent className="space-x-5">
             {isLoading || isFetching
@@ -29,7 +29,7 @@ export default function Services() {
               : services?.data?.map((service: IService) => (
                   <CarouselItem
                     key={service._id}
-                    className="basis-1/4 overflow-visible mb-24"
+                    className="md:basis-1/4 overflow-visible mb-24"
                   >
                     <ServiceCard service={service} />
                   </CarouselItem>

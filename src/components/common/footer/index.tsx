@@ -12,7 +12,7 @@ import SocialMedia from "./SocialMedia";
 const FooterSection = () => {
   return (
     <footer className="bg-slate-900">
-      <div className="py-20 container mx-auto px-[4%] grid grid-cols-4 gap-x-8">
+      <div className="py-20 container mx-auto md:px-[4%] px-4 md:grid grid-cols-4 gap-x-8 space-y-10 md:space-y-0">
         <div>
           <img src={logo} alt="logo" className="w-52" />
           <p className="text-slate-50 mt-4 text-justify">
@@ -184,7 +184,7 @@ const FooterSection = () => {
           style={{ backgroundImage: `url(${footerLine})` }}
           className="w-full h-1 bg-primary"
         ></div>
-        <div className="container mx-auto px-[4%] flex items-center justify-between py-4 text-gray-200 text-sm">
+        <div className="container mx-auto md:px-[4%] px-4 flex flex-wrap items-center justify-between py-4 text-gray-200 text-sm space-y-1 md:space-y-0">
           <p> &copy; 2022 All Rights Reserved</p>
           <p className="flex items-center gap-1">
             Design With <GiSelfLove className="text-primary text-xl" /> by

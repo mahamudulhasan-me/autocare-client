@@ -67,8 +67,8 @@ const ServiceFAQs: React.FC = () => {
           <BtnPrimary title="Appointment" />
         </div>
       </div>
-      <div className="col-span-7 ml-10">
-        <div className="grid grid-cols-2">
+      <div className="col-span-7 md:ml-10 mt-10 md:mt-0">
+        <div className="md:grid grid-cols-2 space-y-5 md:space-y-0">
           <aside>
             <h1 className="text-2xl text-slate-900">Service Benefits</h1>
             <p className="text-lg mt-2 mb-4">

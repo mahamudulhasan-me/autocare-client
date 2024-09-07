@@ -4,7 +4,7 @@ import { socialProfileLinks } from "../../../const/SocialProfileLinks";
 const TeamMember2 = () => {
   return (
     <>
-      <div className="relative w-full h-80 group  border-b-4 border-primary">
+      <div className="relative w-full h-80 group  border-b-4 border-primary mt-36 md:mt-0">
         <div className="absolute h-60 w-1 bg-primary bottom-0 left-0"></div>
         <div className="absolute h-60 w-1 bg-primary right-0 bottom-0"></div>
         <div className="absolute w-full h-1 bg-primary top-[24%]"></div>

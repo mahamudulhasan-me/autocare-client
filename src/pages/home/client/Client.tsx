@@ -28,7 +28,7 @@ export default function Client() {
         <Carousel className="container mx-auto py-4">
           <CarouselContent>
             {clientImage.map((image, index) => (
-              <CarouselItem key={index} className="basis-1/5 ">
+              <CarouselItem key={index} className="md:basis-1/5 basis-1/2 ">
                 <div className="flex justify-center items-center">
                   <img src={image} alt="" className="h-28" />
                 </div>

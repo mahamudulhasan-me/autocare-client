@@ -26,7 +26,7 @@ const CarPolishGallery = () => {
         },
       }}
     >
-      <div className="columns-2 gap-3 px-8 sm:columns-3">
+      <div className="columns-2 gap-3 md:px-8 sm:columns-3">
         {[
           pic1,
           pic2,
