@@ -14,6 +14,9 @@ import BookedSlot from "../pages/dashboard/userDashboard/bookedSlot/BookedSlot";
 import HomePage from "../pages/home";
 import ServicePage from "../pages/services";
 import ServiceDetails from "../pages/services/serviceDetails/ServiceDetails";
+import AdminProtectedRoute from "./AdminProtectedRoute";
+import ProtectedRoute from "./ProtectedRoute";
+import UserProtectedRoute from "./UserProtectedRoute";
 
 const router = createBrowserRouter([
   {
@@ -57,39 +60,75 @@ const router = createBrowserRouter([
   },
   {
     path: "/dashboard",
-    element: <DashboardLayout />,
+    element: (
+      <ProtectedRoute>
+        <DashboardLayout />
+      </ProtectedRoute>
+    ),
     children: [
       {
         path: "/dashboard/admin",
-        element: <AdminDashboard />,
+        element: (
+          <AdminProtectedRoute>
+            <AdminDashboard />
+          </AdminProtectedRoute>
+        ),
       },
       {
         path: "/dashboard/admin/services",
-        element: <AdminServices />,
+        element: (
+          <AdminProtectedRoute>
+            <AdminServices />
+          </AdminProtectedRoute>
+        ),
       },
       {
         path: "/dashboard/admin/slots",
-        element: <AdminSlots />,
+        element: (
+          <AdminProtectedRoute>
+            <AdminSlots />
+          </AdminProtectedRoute>
+        ),
       },
       {
         path: "/dashboard/admin/users-bookings",
-        element: <UserBooking />,
+        element: (
+          <AdminProtectedRoute>
+            <UserBooking />
+          </AdminProtectedRoute>
+        ),
       },
       {
         path: "/dashboard/admin/users-management",
-        element: <AdminUserManagement />,
+        element: (
+          <AdminProtectedRoute>
+            <AdminUserManagement />
+          </AdminProtectedRoute>
+        ),
       },
       {
         path: "/dashboard/user",
-        element: <AdminDashboard />,
+        element: (
+          <UserProtectedRoute>
+            <AdminDashboard />
+          </UserProtectedRoute>
+        ),
       },
       {
         path: "/dashboard/user/booked-slots",
-        element: <BookedSlot />,
+        element: (
+          <UserProtectedRoute>
+            <BookedSlot />
+          </UserProtectedRoute>
+        ),
       },
       {
         path: "/dashboard/user/profile",
-        element: <UserProfile />,
+        element: (
+          <UserProtectedRoute>
+            <UserProfile />
+          </UserProtectedRoute>
+        ),
       },
     ],
   },
