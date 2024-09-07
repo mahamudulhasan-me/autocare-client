@@ -103,7 +103,7 @@ const CheckoutPage = () => {
             ]}
           />
         </div>
-        <div className="container mx-auto px-[5%] grid grid-cols-12 my-10">
+        <div className="container mx-auto md:px-[4%] px-4 md:grid grid-cols-12 my-10 space-y-10 md:space-y-0">
           <aside className="col-span-4 shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] rounded-md py-4">
             <h6 className="text-lg font-[500] mb-4 border-b border-slate-300 px-3">
               Service Info:
@@ -169,7 +169,7 @@ const CheckoutPage = () => {
               </span>
             </Link>
           </aside>
-          <aside className="col-span-7 ml-20">
+          <aside className="col-span-7 md:ml-20">
             <form
               onSubmit={handleSubmit(onSubmit)}
               className="space-y-4 py-4 shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] rounded-md"
@@ -177,7 +177,7 @@ const CheckoutPage = () => {
               <h5 className="text-lg font-[500] mb-4 border-b border-slate-300 px-3">
                 Customer Info:
               </h5>
-              <div className="grid grid-cols-2 gap-4 px-3">
+              <div className="md:grid grid-cols-2 gap-4 px-3 space-y-4 md:space-y-0">
                 <aside>
                   <label className="modal-label">Name*</label>
                   <input
@@ -195,7 +195,7 @@ const CheckoutPage = () => {
                   />
                 </aside>
               </div>
-              <div className="grid grid-cols-2 gap-4 px-3">
+              <div className="md:grid grid-cols-2 gap-4 px-3 space-y-4 md:space-y-0">
                 <aside>
                   <label className="modal-label">Phone*</label>
                   <input
@@ -216,7 +216,7 @@ const CheckoutPage = () => {
               <h5 className="text-lg font-[500] mb-4 border-b border-slate-300 px-3">
                 Vehicle Info:
               </h5>
-              <div className="grid grid-cols-2 gap-4 px-3">
+              <div className="md:grid grid-cols-2 gap-4 px-3 space-y-4 md:space-y-0">
                 <aside>
                   <label className="modal-label">Vehicle Type</label>
                   <input
@@ -234,7 +234,7 @@ const CheckoutPage = () => {
                   />
                 </aside>
               </div>
-              <div className="grid grid-cols-3 gap-4 px-3">
+              <div className="md:grid grid-cols-3 gap-4 px-3 space-y-4 md:space-y-0">
                 <aside>
                   <label className="modal-label">Model</label>
                   <input
