@@ -1,8 +1,17 @@
-import { Breadcrumb, Button, DatePicker, Skeleton, Tag, Tooltip } from "antd";
+import {
+  Breadcrumb,
+  Button,
+  DatePicker,
+  Modal,
+  Skeleton,
+  Tag,
+  Tooltip,
+} from "antd";
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import { IoHomeOutline } from "react-icons/io5";
 import { useNavigate, useParams } from "react-router-dom";
+import { toast } from "sonner";
 import BtnBackToService from "../../../components/ui/buttons/BtnBackToService";
 import BtnPrimary from "../../../components/ui/buttons/BtnPrimary";
 import SlotLoader from "../../../components/ui/loaders/SlotLoader";
@@ -17,14 +26,18 @@ import ServiceFAQs from "./ServiceFAQs";
 // Define the type for grouped slots
 
 const ServiceDetails = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedSlotId, setSelectedSlotId] = useState<string>("");
   const [selectedDate, setSelectedDate] = useState<dayjs.Dayjs>(dayjs());
   const [filteredSlots, setFilteredSlots] = useState<ISlot[]>([]);
+
   const { slugId } = useParams<{ slugId: string }>();
   const serviceId = slugId?.split("-").pop();
+
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const { user } = useAppSelector((state) => state.auth);
+
+  const { user, isAuthenticated } = useAppSelector((state) => state.auth);
 
   const { data: service, isLoading: isLoadingService } =
     useGetServiceQuery(serviceId);
@@ -69,6 +82,16 @@ const ServiceDetails = () => {
       );
     }
   }, [dispatch, selectedSlotId, service, slots, user]);
+
+  const handleNavigateToCheckout = () => {
+    if (!selectedSlotId) {
+      toast.warning("Please select a slot");
+    } else if (isAuthenticated) {
+      navigate(`/services/${slug}/checkout`);
+    } else {
+      setIsModalOpen(true);
+    }
+  };
 
   return (
     <div>
@@ -185,9 +208,9 @@ const ServiceDetails = () => {
           {filteredSlots.length > 0 && (
             <div className="mt-8">
               <BtnPrimary
-                disabled={!selectedSlotId || isLoadingSlots}
+                // disabled={!selectedSlotId || isLoadingSlots}
                 title="Book Now"
-                onClick={() => navigate(`/services/${slug}/checkout`)}
+                onClick={handleNavigateToCheckout}
               />
             </div>
           )}
@@ -204,6 +227,25 @@ const ServiceDetails = () => {
         <div className="h-[1px] w-full bg-slate-300 col-span-12"></div>
         <ServiceFAQs />
       </div>
+
+      <Modal
+        open={isModalOpen}
+        title="Login Required for Booking"
+        onCancel={() => {
+          setIsModalOpen(false);
+        }}
+        footer={() => (
+          <div className="flex justify-end items-stretch">
+            <BtnPrimary
+              title="Yes, Proceed to Login"
+              onClick={() => navigate("/login")}
+            />
+          </div>
+        )}
+      >
+        <p>To proceed with booking, you need to be logged in.</p>
+        <p>Would you like to log in now?</p>
+      </Modal>
     </div>
   );
 };

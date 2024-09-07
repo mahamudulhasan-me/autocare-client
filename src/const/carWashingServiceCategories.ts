@@ -8,6 +8,4 @@ export const carWashingServiceCategories = [
   { categoryId: 6, categoryName: "Hand Wash" },
   { categoryId: 7, categoryName: "Eco-Friendly Wash" },
   { categoryId: 8, categoryName: "Mobile Car Wash" },
-  { categoryId: 9, categoryName: "Detailing Service" },
-  { categoryId: 10, categoryName: "Ceramic Coating Service" },
 ];

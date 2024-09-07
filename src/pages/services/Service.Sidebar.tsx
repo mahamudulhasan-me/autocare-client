@@ -83,7 +83,7 @@ const ServiceCategories = (
 );
 const ServiceSidebar = () => {
   return (
-    <div className="space-y-8 md:space-y-0 pt-10 md:pt-0">
+    <div className="space-y-8  pt-10 md:pt-0">
       {ServiceCategories}
       {DownloadBrochures}
       {ContactUs}

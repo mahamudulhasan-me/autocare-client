@@ -4,14 +4,27 @@ import { IoHomeOutline } from "react-icons/io5";
 import MyCheckbox from "../../components/ui/checkbox/MyCheckbox";
 import PageBanner from "../../components/ui/pageBanner/PageBanner";
 import { useGetAllServicesQuery } from "../../redux/features/service/serviceApi";
+import { setParams } from "../../redux/features/service/serviceSlice";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { IService } from "../../types";
 import ServiceCard from "../home/services/ServiceCard";
 import ServiceSidebar, {
   ContactUs,
   DownloadBrochures,
 } from "./Service.Sidebar";
+
 const ServicePage = () => {
-  const { data: services } = useGetAllServicesQuery({});
+  const { params } = useAppSelector((state) => state.service);
+  const dispatch = useAppDispatch();
+  const { data: services } = useGetAllServicesQuery(params);
+
+  const handleSorting = (value: string) =>
+    dispatch(
+      setParams(
+        { name: "sortBy", value } // Add or remove sorting parameter
+      )
+    );
+
   return (
     <div>
       <PageBanner title="All Services" desc="Lorem ipsum dolor sit amet" />
@@ -43,8 +56,14 @@ const ServicePage = () => {
                 size="large"
               />
               <div className="flex items-center gap-x-5">
-                <MyCheckbox title="Sort by Price" />
-                <MyCheckbox title="Sort by Duration" />
+                <MyCheckbox
+                  title="Sort by Price"
+                  onChange={() => handleSorting("price")}
+                />
+                <MyCheckbox
+                  title="Sort by Duration"
+                  onChange={() => handleSorting("duration")}
+                />
               </div>
             </div>
             <div className="md:grid grid-cols-3 gap-x-4 gap-y-24 space-y-28 md:space-y-0 mb-28 md:mb-0">

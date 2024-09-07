@@ -1,3 +1,4 @@
+import { IServiceQueryParams } from "../../../types/global.type";
 import baseApiSlice from "../../baseApi/baseApiSlice";
 
 const serviceApiSlice = baseApiSlice.injectEndpoints({
@@ -9,10 +10,15 @@ const serviceApiSlice = baseApiSlice.injectEndpoints({
       }),
     }),
     getAllServices: builder.query({
-      query: () => ({
-        url: "/services",
-        method: "GET",
-      }),
+      query: (args) => {
+        const params = new URLSearchParams();
+        if (args) {
+          args.forEach((item: IServiceQueryParams) =>
+            params.append(item.name, item.value)
+          );
+        }
+        return { url: "/services", method: "GET", params };
+      },
       providesTags: ["Services"],
     }),
     createService: builder.mutation({
