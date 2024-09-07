@@ -5,7 +5,7 @@ const baseApiSlice = createApi({
   reducerPath: "baseApi",
 
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:1440/api",
+    baseUrl: import.meta.env.VITE_BASE_URL,
     // credentials: "include",
     prepareHeaders: (headers, { getState }) => {
       const token = (getState() as RootState).auth.token;
