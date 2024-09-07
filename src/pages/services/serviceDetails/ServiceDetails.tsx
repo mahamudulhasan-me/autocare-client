@@ -138,6 +138,7 @@ const ServiceDetails = () => {
             <DatePicker
               className="w-1/3"
               defaultValue={selectedDate}
+              minDate={dayjs(new Date())}
               onChange={(date) => setSelectedDate(date)}
             />
           </div>
@@ -184,6 +185,7 @@ const ServiceDetails = () => {
           {filteredSlots.length > 0 && (
             <div className="mt-8">
               <BtnPrimary
+                disabled={!selectedSlotId || isLoadingSlots}
                 title="Book Now"
                 onClick={() => navigate(`/services/${slug}/checkout`)}
               />
@@ -194,7 +196,9 @@ const ServiceDetails = () => {
             elit. Excepturi quisquam debitis quia aperiam doloribus nostrum
             perspiciatis vitae nisi, laudantium temporibus!
           </p>
-          <BtnBackToService />
+          <div className="md:hidden block">
+            <BtnBackToService />
+          </div>
         </aside>
 
         <div className="h-[1px] w-full bg-slate-300 col-span-12"></div>

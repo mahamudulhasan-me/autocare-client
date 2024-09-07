@@ -17,8 +17,16 @@ h4 {
 .bg-gradient-header {
   background: linear-gradient(to right, #0f172a 50%, #ee3131 50%);
 }
+/* Default styles for mobile devices */
 .bg-gradient-testimonial {
-  background: linear-gradient(to right, #0f172a 50%, #f1f5f9 50%);
+  background-color: #f1f5f9; /* Or any other default background color for mobile */
+}
+
+/* Styles for larger devices (desktop) */
+@media (min-width: 1024px) {
+  .bg-gradient-testimonial {
+    background: linear-gradient(to right, #0f172a 50%, #f1f5f9 50%);
+  }
 }
 
 .header-shape {

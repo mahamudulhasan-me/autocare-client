@@ -50,7 +50,10 @@ const ResponsiveNav: React.FC = () => {
 
   return (
     <>
-      <MdMenu onClick={showDrawer} className="text-3xl text-primary" />
+      <MdMenu
+        onClick={showDrawer}
+        className="text-3xl text-primary block md:hidden"
+      />
 
       <Drawer placement="left" title="Auto Care" onClose={onClose} open={open}>
         <div className="md:hidden flex flex-col">

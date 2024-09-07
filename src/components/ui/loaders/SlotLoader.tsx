@@ -11,14 +11,6 @@ const SlotLoader = () => {
           ))}
         </div>
       </div>
-      <div>
-        <Skeleton.Input active style={{ width: "100%" }} />
-        <div className="flex flex-wrap items-center gap-4 mt-2">
-          {Array.from({ length: 10 }, (_, i) => (
-            <Skeleton.Button active key={i} style={{ width: "100%" }} />
-          ))}
-        </div>
-      </div>
     </div>
   );
 };

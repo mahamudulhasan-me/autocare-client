@@ -6,7 +6,10 @@ import PageBanner from "../../components/ui/pageBanner/PageBanner";
 import { useGetAllServicesQuery } from "../../redux/features/service/serviceApi";
 import { IService } from "../../types";
 import ServiceCard from "../home/services/ServiceCard";
-import ServiceSidebar from "./Service.Sidebar";
+import ServiceSidebar, {
+  ContactUs,
+  DownloadBrochures,
+} from "./Service.Sidebar";
 const ServicePage = () => {
   const { data: services } = useGetAllServicesQuery({});
   return (
@@ -32,7 +35,7 @@ const ServicePage = () => {
             <ServiceSidebar />
           </aside>
           <aside className="col-span-9">
-            <div className="bg-slate-100 w-full flex md:flex-wrap flex-col items-center justify-between px-2 py-4 rounded-sm mb-10 space-y-5 md:space-y-0">
+            <div className="bg-slate-100 w-full flex flex-wrap md:flex-row flex-col items-center justify-between px-2 py-4 rounded-sm mb-10 space-y-5 md:space-y-0">
               <Search
                 className="md:w-[30%]"
                 placeholder="input search text"
@@ -49,7 +52,9 @@ const ServicePage = () => {
                 <ServiceCard service={service} key={service._id} />
               ))}
             </div>
-            <ServiceSidebar />
+            <div className="md:hidden block mt-28 space-y-8">
+              {DownloadBrochures} {ContactUs}
+            </div>
           </aside>
         </div>
       </div>
