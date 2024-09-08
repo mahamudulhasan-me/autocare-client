@@ -83,9 +83,7 @@ const ServicePage = () => {
                   value={searchTerm}
                 />
 
-                {(sort?.length > 0 ||
-                  category?.length > 0 ||
-                  search?.length > 0) && (
+                {(sort || category || search) && (
                   <button
                     onClick={handleClearFilter}
                     className=" text-white  rounded-md flex items-stretch gap-1 group"

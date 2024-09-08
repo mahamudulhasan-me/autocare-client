@@ -21,6 +21,7 @@ import { useGetServiceQuery } from "../../../redux/features/service/serviceApi";
 import { useGetSlotsByServiceQuery } from "../../../redux/features/slot/slotApi";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import { IService, ISlot } from "../../../types";
+import CompareServices from "../compareServices/CompareServices";
 import ServiceFAQs from "./ServiceFAQs";
 
 // Define the type for grouped slots
@@ -133,8 +134,9 @@ const ServiceDetails = () => {
             </>
           )}
 
-          <div className="hidden md:block">
+          <div className="hidden md:flex items-center gap-x-4 w-fit">
             <BtnBackToService />
+            <CompareServices serviceIdProp={_id} />
           </div>
         </aside>
         <aside className="col-span-7 md:ml-10 my-10 md:mt-0">

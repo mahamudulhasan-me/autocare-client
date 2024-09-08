@@ -11,6 +11,7 @@ import baseApiSlice from "./baseApi/baseApiSlice";
 import { authReducer } from "./features/authentication/authSlice";
 
 import { bookingReducer } from "./booking/bookingSlice";
+import { compareServicesReducer } from "./features/compareServices/CompareServicesSlice";
 import { filterReducer } from "./features/filter/filterSlice";
 import { serviceReducer } from "./features/service/serviceSlice";
 import updateServiceSlice from "./features/update/updateServiceSlice";
@@ -32,6 +33,7 @@ export const store = configureStore({
     booking: bookingReducer,
     service: serviceReducer,
     filter: filterReducer,
+    compareServices: compareServicesReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
