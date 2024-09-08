@@ -3,9 +3,11 @@ import "./MyCheckboxStyles.css";
 const MyCheckbox = ({
   title,
   onChange,
+  checked = false,
 }: {
   title: string;
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  checked?: boolean;
 }): JSX.Element => {
   return (
     <>
@@ -13,6 +15,7 @@ const MyCheckbox = ({
         <input
           onChange={onChange}
           type="checkbox"
+          checked={checked}
           id={title}
           className="uv-checkbox"
         />

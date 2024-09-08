@@ -4,7 +4,7 @@ import { MdOutlineLocationOn } from "react-icons/md";
 import AnimatedBackground from "../../components/core/animated-background";
 import { carWashingServiceCategories } from "../../const/carWashingServiceCategories";
 
-import { setParams } from "../../redux/features/service/serviceSlice";
+import { setCategory } from "../../redux/features/filter/filterSlice";
 import { useAppDispatch } from "../../redux/hooks";
 
 export const DownloadBrochures = (
@@ -66,15 +66,7 @@ const ServiceSidebar = () => {
         <div className="w-1/4 h-0.5 bg-primary mt-2 mb-6"></div>
         <div className="flex flex-col w-full  rounded-sm  bg-white ">
           <AnimatedBackground
-            onValueChange={(value) =>
-              dispatch(
-                setParams({
-                  method: "filter",
-                  name: "categoryId",
-                  value: value!,
-                })
-              )
-            }
+            onValueChange={(value) => dispatch(setCategory(value))}
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore
             defaultValue={carWashingServiceCategories[0].categoryId}

@@ -1,14 +1,16 @@
 import { Alert, Breadcrumb } from "antd";
 import Search from "antd/es/input/Search";
+import { useEffect, useState } from "react";
 import { IoIosRefresh } from "react-icons/io";
 import { IoHomeOutline } from "react-icons/io5";
 import MyCheckbox from "../../components/ui/checkbox/MyCheckbox";
 import PageBanner from "../../components/ui/pageBanner/PageBanner";
-import { useGetAllServicesQuery } from "../../redux/features/service/serviceApi";
 import {
-  clearParams,
-  setParams,
-} from "../../redux/features/service/serviceSlice";
+  resetFilter,
+  setSearch,
+  setSort,
+} from "../../redux/features/filter/filterSlice";
+import { useGetAllServicesQuery } from "../../redux/features/service/serviceApi";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { IService } from "../../types";
 import ServiceCard from "../home/services/ServiceCard";
@@ -18,17 +20,31 @@ import ServiceSidebar, {
 } from "./Service.Sidebar";
 
 const ServicePage = () => {
-  const { params } = useAppSelector((state) => state.service);
+  const [searchTerm, setSearchTerm] = useState<string>("");
+  const filtersBy = useAppSelector((state) => state.filter);
   const dispatch = useAppDispatch();
-  const { data: services, isError } = useGetAllServicesQuery(params);
+  const { sort } = filtersBy;
+  const { data: services, isError } = useGetAllServicesQuery(filtersBy);
+  const [latestSearchTerm, setLatestSearchTerm] = useState<string>("");
 
-  const handleSorting = (value: string) =>
-    dispatch(
-      setParams(
-        { name: "sortBy", value } // Add or remove sorting parameter
-      )
-    );
+  // useEffect to dispatch setSearch after 5 seconds of inactivity
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      console.log(latestSearchTerm);
+      dispatch(setSearch(latestSearchTerm));
+    }, 500);
 
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [latestSearchTerm, dispatch]);
+
+  // Handle input change and update local state
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = event.target;
+    setSearchTerm(value); // Update local state immediately
+    setLatestSearchTerm(value); // Update latest search term
+  };
   return (
     <div>
       <PageBanner title="All Services" desc="Lorem ipsum dolor sit amet" />
@@ -59,29 +75,32 @@ const ServicePage = () => {
                   enterButton
                   size="large"
                   className="w-1/2"
+                  onChange={handleChange}
+                  value={searchTerm}
                 />
-                {params.length > 0 && (
-                  <button
-                    onClick={() => dispatch(clearParams())}
-                    className=" text-white  rounded-md flex items-stretch gap-1 group"
-                  >
-                    <span className="bg-primary rounded-l-md px-4 py-2 font-semibold group-hover:bg-opacity-90 transition-opacity uppercase">
-                      Clear Filter
-                    </span>
-                    <span className=" bg-primary px-1.5 py-1 flex justify-center items-center text-2xl rounded-r-md hover:bg-opacity-90 transition-opacity ">
-                      <IoIosRefresh />
-                    </span>
-                  </button>
-                )}
+
+                <button
+                  onClick={() => dispatch(resetFilter())}
+                  className=" text-white  rounded-md flex items-stretch gap-1 group"
+                >
+                  <span className="bg-primary rounded-l-md px-4 py-2 font-semibold group-hover:bg-opacity-90 transition-opacity uppercase">
+                    Clear Filter
+                  </span>
+                  <span className=" bg-primary px-1.5 py-1 flex justify-center items-center text-2xl rounded-r-md hover:bg-opacity-90 transition-opacity ">
+                    <IoIosRefresh />
+                  </span>
+                </button>
               </div>
               <div className="flex items-center gap-x-5">
                 <MyCheckbox
                   title="Sort by Price"
-                  onChange={() => handleSorting("price")}
+                  onChange={() => dispatch(setSort("price"))}
+                  checked={sort === "price"}
                 />
                 <MyCheckbox
                   title="Sort by Duration"
-                  onChange={() => handleSorting("duration")}
+                  onChange={() => dispatch(setSort("duration"))}
+                  checked={sort === "duration"}
                 />
               </div>
             </div>
