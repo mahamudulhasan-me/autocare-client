@@ -4,7 +4,7 @@ import UsersTable from "./UsersTable";
 
 const AdminUserManagement = () => {
   return (
-    <div className="bg-slate-100 p-4 rounded-md">
+    <div className="bg-slate-100 md:p-4 p-2 rounded-md">
       <Breadcrumb
         items={[
           {
@@ -23,7 +23,7 @@ const AdminUserManagement = () => {
           },
         ]}
       />
-      <div className="w-full h-full title-shadow bg-white  py-2 px-4 rounded-md mb-4 flex justify-between items-center">
+      <div className="w-full h-full title-shadow bg-white  py-2 px-4 rounded-md mb-4 md:flex justify-between items-center ">
         <h1 className="text-xl font-semibold">User Management</h1>
       </div>
       <UsersTable />

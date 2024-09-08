@@ -15,7 +15,7 @@ const PageBanner = ({
         style={{ backgroundImage: `url(${coverImage || coverImageDefault})` }}
         className="w-full h-fit bg-cover bg-center bg-no-repeat bg-slate-900/60 bg-blend-overlay"
       >
-        <div className="container mx-auto px-[5%] h-full text-white py-20 space-y-2">
+        <div className="container mx-auto md:px-[5%] px-4 h-full text-white md:py-20 py-10 space-y-2">
           <TextEffect
             per="char"
             preset="fade"
@@ -32,7 +32,7 @@ const PageBanner = ({
             <p className="w-28 h-1 bg-primary"></p>
           </div>
 
-          <TextEffect per="word" preset="fade" className="w-1/2">
+          <TextEffect per="word" preset="fade" className="md:w-1/2">
             {desc}
           </TextEffect>
         </div>

@@ -1,7 +1,7 @@
 import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
 import { Avatar, Badge, Button, Layout, Menu, theme } from "antd";
 import Search from "antd/es/input/Search";
-import React, { ReactNode, useState } from "react";
+import React, { ReactNode, useEffect, useState } from "react";
 import { BiMessageRoundedDots } from "react-icons/bi";
 import { FaRegBell } from "react-icons/fa";
 import { MdLogout } from "react-icons/md";
@@ -69,7 +69,27 @@ const DashboardLayout: React.FC = () => {
     dispatch(logout());
     navigate("/");
   };
+  // Handle the collapse state based on screen width
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth <= 768) {
+        setCollapsed(true); // Automatically collapse in mobile view
+      } else {
+        setCollapsed(false);
+      }
+    };
 
+    // Call the function once to check initial screen width
+    handleResize();
+
+    // Add event listener for window resize
+    window.addEventListener("resize", handleResize);
+
+    // Cleanup event listener on component unmount
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
   return (
     <Layout style={{ minHeight: "100vh" }}>
       <Sider
@@ -133,7 +153,7 @@ const DashboardLayout: React.FC = () => {
               style={{
                 fontSize: "16px",
                 width: 64,
-                height: 6,
+                height: 64,
                 marginLeft: 16,
               }}
             />

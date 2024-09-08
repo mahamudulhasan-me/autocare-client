@@ -105,6 +105,7 @@ const UsersTable: React.FC = () => {
       dataSource={users?.data}
       onChange={onChange}
       className="table-shadow rounded-md"
+      scroll={{ x: "max-content" }}
     />
   );
 };

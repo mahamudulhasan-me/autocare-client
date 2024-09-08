@@ -23,7 +23,7 @@ const ServicePage = () => {
   const [searchTerm, setSearchTerm] = useState<string>("");
   const filtersBy = useAppSelector((state) => state.filter);
   const dispatch = useAppDispatch();
-  const { sort } = filtersBy;
+  const { sort, category, search } = filtersBy;
   const { data: services, isError } = useGetAllServicesQuery(filtersBy);
   const [latestSearchTerm, setLatestSearchTerm] = useState<string>("");
 
@@ -44,6 +44,10 @@ const ServicePage = () => {
     const { value } = event.target;
     setSearchTerm(value); // Update local state immediately
     setLatestSearchTerm(value); // Update latest search term
+  };
+  const handleClearFilter = () => {
+    dispatch(resetFilter());
+    setSearchTerm("");
   };
   return (
     <div>
@@ -69,27 +73,31 @@ const ServicePage = () => {
           </aside>
           <aside className="col-span-9">
             <div className="bg-slate-100 w-full flex flex-wrap md:flex-row flex-col items-center justify-between px-2 py-4 rounded-sm mb-10 space-y-5 md:space-y-0">
-              <div className="w-[65%] flex items-center  gap-x-5">
+              <div className="md:w-[65%] md:flex items-center  md:gap-x-5 space-y-2 md:space-y-0">
                 <Search
                   placeholder="input search text"
                   enterButton
                   size="large"
-                  className="w-1/2"
+                  className="md:w-1/2"
                   onChange={handleChange}
                   value={searchTerm}
                 />
 
-                <button
-                  onClick={() => dispatch(resetFilter())}
-                  className=" text-white  rounded-md flex items-stretch gap-1 group"
-                >
-                  <span className="bg-primary rounded-l-md px-4 py-2 font-semibold group-hover:bg-opacity-90 transition-opacity uppercase">
-                    Clear Filter
-                  </span>
-                  <span className=" bg-primary px-1.5 py-1 flex justify-center items-center text-2xl rounded-r-md hover:bg-opacity-90 transition-opacity ">
-                    <IoIosRefresh />
-                  </span>
-                </button>
+                {(sort?.length > 0 ||
+                  category?.length > 0 ||
+                  search?.length > 0) && (
+                  <button
+                    onClick={handleClearFilter}
+                    className=" text-white  rounded-md flex items-stretch gap-1 group"
+                  >
+                    <span className="bg-primary rounded-l-md px-4 py-2 font-semibold group-hover:bg-opacity-90 transition-opacity uppercase">
+                      Clear Filter
+                    </span>
+                    <span className=" bg-primary px-1.5 py-1 flex justify-center items-center text-2xl rounded-r-md hover:bg-opacity-90 transition-opacity ">
+                      <IoIosRefresh />
+                    </span>
+                  </button>
+                )}
               </div>
               <div className="flex items-center gap-x-5">
                 <MyCheckbox

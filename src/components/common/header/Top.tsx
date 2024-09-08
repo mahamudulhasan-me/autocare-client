@@ -32,7 +32,7 @@ const Top = () => {
             </h2>
             <p className="text-sm">Mon -Sat: 7:00 - 17:00</p>
           </div>
-          <div className="text-white ml-8 bg-primary p-2 rounded-md flex items-center justify-center gap-2">
+          <div className="text-white ml-6 md:ml-0 bg-primary p-2 rounded-md flex items-center justify-center gap-2">
             <VscCallOutgoing size={24} className="animate-bounce" />
             <div>
               <h1 className="font-[500] uppercase">Call Toll Free</h1>

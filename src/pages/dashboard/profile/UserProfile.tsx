@@ -10,8 +10,10 @@ import UpdateProfileModal from "./UpdateProfileModal";
 const UserProfile = () => {
   const { user } = useAppSelector((state) => state.auth);
 
-  const { data: userData } = useGetUserQuery(user?._id);
+  const { data: userData, isLoading } = useGetUserQuery(user?._id);
   const { name, email, phone, address, role } = userData?.data || {};
+  if (isLoading) return <div>Loading...</div>;
+  console.log(userData);
   return (
     <div className="bg-slate-100 p-4 rounded-md">
       <Breadcrumb
@@ -43,12 +45,12 @@ const UserProfile = () => {
             />
           </div>
           <div className="flex items-center gap-1">
-            <h2 className="text-2xl font-semibold ">{name}</h2>{" "}
+            <h2 className="md:text-2xl text-xl font-semibold ">{name}</h2>{" "}
             <Tag className="uppercase" color="orange">
               {role}
             </Tag>
           </div>
-          <div className="flex items-center gap-4">
+          <div className="flex  gap-4 flex-wrap justify-center items-center">
             <p className="text-slate-700 flex items-center gap-1">
               <FaRegEnvelope /> {email}
             </p>

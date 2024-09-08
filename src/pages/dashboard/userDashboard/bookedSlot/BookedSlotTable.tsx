@@ -148,6 +148,7 @@ const BookedSlotTable: React.FC = () => {
         onChange={onChange}
         className="table-shadow rounded-md"
         rowClassName={(_, index) => (index === 0 ? "text-lg font-bold" : "")}
+        scroll={{ x: "max-content" }}
       />
     </>
   );

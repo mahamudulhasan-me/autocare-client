@@ -33,6 +33,7 @@ const ServiceTable: React.FC = () => {
       title: "Name",
       dataIndex: "name",
     },
+
     {
       title: "Duration",
       dataIndex: "duration",
@@ -88,6 +89,7 @@ const ServiceTable: React.FC = () => {
       dataSource={services?.data}
       onChange={onChange}
       className="table-shadow rounded-md"
+      scroll={{ x: "max-content" }}
     />
   );
 };

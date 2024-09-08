@@ -91,6 +91,7 @@ const BookingsTable: React.FC = () => {
       dataSource={bookings?.data}
       onChange={onChange}
       className="table-shadow rounded-md"
+      scroll={{ x: "max-content" }}
     />
   );
 };
