@@ -44,7 +44,7 @@ const ContactUsPage = () => {
       </div>
       <div className="container mx-auto md:px-[4%] px-4 md:grid grid-cols-12 my-20 gap-x-12 ">
         <aside className="col-span-8 p-8 rounded-md bg-slate-200">
-          <h1 className="text-2xl font-semibold">Send Message Us</h1>
+          <h1 className="text-3xl font-semibold">Send Message Us</h1>
           <form className="space-y-5 mt-6">
             <div className="grid grid-cols-2 gap-5 ">
               <input
