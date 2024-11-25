@@ -4,6 +4,7 @@ import MainLayout from "../layout/MainLayout";
 import NotFoundLayout from "../layout/NotFoundLayout";
 import Login from "../pages/authentication/Login";
 import CheckoutPage from "../pages/checkout";
+import ContactUsPage from "../pages/contact";
 import AdminDashboard from "../pages/dashboard/adminDashboard/AdminDashboard";
 import AdminServices from "../pages/dashboard/adminDashboard/serviceManagement/AdminServices";
 import AdminSlots from "../pages/dashboard/adminDashboard/slotManagement/AdminSlots";
@@ -42,7 +43,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/contact",
-        element: <div>contact page will be coming soon!</div>,
+        element: <ContactUsPage />,
       },
       {
         path: "/about",

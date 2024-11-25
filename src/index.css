@@ -146,3 +146,8 @@ border: 1px solid rgba(255, 255, 255, 0.3); */
 .ant-collapse-header {
   font-size: 1rem; /* Adjust the size as needed */
 }
+
+/* ------------------------ */
+.form-input {
+  @apply w-full px-2 py-3 rounded-sm  text-lg text-slate-900 focus:outline-none  focus:ring-1 focus:ring-primary;
+}

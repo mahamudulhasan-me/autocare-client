@@ -30,7 +30,6 @@ const ServicePage = () => {
   // useEffect to dispatch setSearch after 5 seconds of inactivity
   useEffect(() => {
     const timer = setTimeout(() => {
-      console.log(latestSearchTerm);
       dispatch(setSearch(latestSearchTerm));
     }, 500);
 
@@ -50,11 +49,12 @@ const ServicePage = () => {
     setSearchTerm("");
   };
   return (
-    <div>
+    <section>
       <PageBanner title="All Services" desc="Lorem ipsum dolor sit amet" />
       <div>
-        <div className="shadow-[rgba(50,_50,_105,_0.15)_0px_2px_5px_0px,_rgba(0,_0,_0,_0.05)_0px_1px_1px_0px] container mx-auto px-[5%] py-6 text-xl">
+        <div className="shadow-[rgba(50,_50,_105,_0.15)_0px_2px_5px_0px,_rgba(0,_0,_0,_0.05)_0px_1px_1px_0px]  py-6 text-xl">
           <Breadcrumb
+            className="container mx-auto md:px-[4%] px-4"
             items={[
               {
                 href: "/",
@@ -72,7 +72,7 @@ const ServicePage = () => {
             <ServiceSidebar />
           </aside>
           <aside className="col-span-9">
-            <div className="bg-slate-100 w-full flex flex-wrap md:flex-row flex-col items-center justify-between px-2 py-4 rounded-sm mb-10 space-y-5 md:space-y-0">
+            <div className="shadow-[0px_2px_3px_-1px_rgba(0,0,0,0.1),0px_1px_0px_0px_rgba(25,28,33,0.02),0px_0px_0px_1px_rgba(25,28,33,0.08)] bg-slate-100 w-full flex flex-wrap md:flex-row flex-col items-center justify-between px-2 py-4 rounded-sm mb-10 space-y-5 md:space-y-0">
               <div className="md:w-[65%] md:flex items-center  md:gap-x-5 space-y-2 md:space-y-0">
                 <Search
                   placeholder="input search text"
@@ -132,7 +132,7 @@ const ServicePage = () => {
           </aside>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 
