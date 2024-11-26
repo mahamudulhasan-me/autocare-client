@@ -16,7 +16,7 @@ const HomePage = () => {
       <CarPolish />
       <Services />
       <Team />
-      <Testimonials />
+      <Testimonials sectionDivider={true} />
       <Blog />
       <Client />
     </div>

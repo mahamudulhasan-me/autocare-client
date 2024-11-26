@@ -5,6 +5,8 @@ import { IoHomeOutline, IoTrophyOutline } from "react-icons/io5";
 import aboutImg from "../../assets/images/worker.png";
 import PageBanner from "../../components/ui/pageBanner/PageBanner";
 import SectionDivider from "../../components/ui/sectionDivider/SectionDivider";
+import Client from "../home/client/Client";
+import Testimonials from "../home/testimonials/Testimonials";
 import AboutCompanyCard from "./AboutCompanyCard";
 import OverviewCounter from "./OverviewCounter";
 
@@ -27,7 +29,7 @@ const AboutUsPage = () => {
         />
       </div>
       <div className="container mx-auto md:px-[4%] px-4 md:grid grid-cols-12 my-20">
-        <aside className="col-span-8 mr-10">
+        <aside className="col-span-8 md:mr-10">
           <div className="w-full flex flex-col justify-start items-start px-2 md:px-0">
             <h1 className="md:text-3xl text-2xl text-center font-bold uppercase text-slate-900">
               About Company
@@ -59,7 +61,7 @@ const AboutUsPage = () => {
             remaining essentially unchanged. It was popularised in the with the
             release of Letraset sheets containing Lorem Ipsum
           </article>
-          <div className="grid grid-cols-2 mt-10 gap-y-14">
+          <div className="grid md:grid-cols-2 mt-10 gap-y-14">
             <AboutCompanyCard
               icon={<FaGear />}
               title="WE'RE EXPERTS"
@@ -90,6 +92,10 @@ const AboutUsPage = () => {
       <>
         <OverviewCounter />
       </>
+      <Testimonials sectionDivider={false} />
+      <div className="mt-20">
+        <Client />
+      </div>
     </section>
   );
 };
