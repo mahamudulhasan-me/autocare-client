@@ -186,6 +186,5 @@
 
 Both the frontend and backend of this project are deployed on **Vercel**. Ensure that environment variables are correctly configured in the Vercel dashboard for both deployments to run smoothly.
 
-## Author
 
-Developed by **[Mahamudul Hasan](https://mahamudul-hasan.vercel.app/)**. If you have any questions or feedback, feel free to reach out.
+
